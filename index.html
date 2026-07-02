@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Admisiones - V1 - Universitario de Formación</title>
+    <!-- Google Fonts para un diseño moderno como la web -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colores Institucionales UF */
+            --uf-dark-blue: #0b4360; 
+            --uf-teal: #009e96;      
+            --uf-light-teal: #e0f5f4;
+            --uf-light-blue: #e8f0f5;
+            
+            /* Colores de Interfaz */
+            --bg-body: #f4f7f9;
+            --bg-card: #ffffff;
+            --text-main: #333333;
+            --text-muted: #555555;
+            --border-color: #d1dfeb;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        /* ----- SIDEBAR ----- */
+        .sidebar {
+            width: 300px;
+            background-color: var(--uf-dark-blue);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.05);
+            z-index: 10;
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            background-color: #08344d;
+            text-align: center;
+            border-bottom: 5px solid var(--uf-teal);
+        }
+
+        /* Logo Estilizado UF */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+        
+        .logo-u { color: white; }
+        .logo-f { color: var(--uf-teal); }
+        
+        .sidebar-header h2 {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+        }
+
+        .sidebar-header p {
+            margin: 5px 0 0;
+            font-size: 0.8rem;
+            color: #a4c5d9;
+            font-weight: 600;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #b5d1e6;
+            padding: 15px 25px;
+            text-align: left;
+            font-size: 0.95rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 5px solid transparent;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .nav-btn.active {
+            background-color: var(--uf-light-teal);
+            color: var(--uf-dark-blue);
+            border-left-color: var(--uf-teal);
+        }
+
+        .nav-btn span {
+            display: inline-block;
+            width: 26px;
+            height: 26px;
+            background-color: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            margin-right: 15px;
+            font-size: 0.8rem;
+        }
+
+        .nav-btn.active span {
+            background-color: var(--uf-teal);
+            color: white;
+        }
+
+        /* ----- MAIN CONTENT ----- */
+        .main-content {
+            flex: 1;
+            padding: 50px 70px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ----- TYPOGRAPHY & CARDS ----- */
+        h1 {
+            color: var(--uf-dark-blue);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 2.2rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .title-underline {
+            width: 80px;
+            height: 5px;
+            background-color: var(--uf-teal);
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        h2 {
+            color: var(--uf-dark-blue);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            border-top: 4px solid var(--uf-teal);
+        }
+
+        p { line-height: 1.7; margin-top: 0; margin-bottom: 15px; color: var(--text-muted); }
+        ul, ol { line-height: 1.7; margin-top: 0; padding-left: 20px; color: var(--text-muted); }
+        li { margin-bottom: 10px; }
+        strong { color: var(--uf-dark-blue); }
+
+        .tag {
+            display: inline-block;
+            background-color: var(--uf-light-blue);
+            color: var(--uf-dark-blue);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid var(--border-color);
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            margin: 3px 0;
+        }
+
+        /* ----- ALERTS ----- */
+        .alert {
+            background-color: var(--uf-light-teal);
+            border-left: 5px solid var(--uf-teal);
+            color: var(--uf-dark-blue);
+            padding: 18px 25px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .alert-danger {
+            background-color: #fdf3f4;
+            border-left: 5px solid #d9534f;
+            color: #b52b27;
+        }
+
+        /* ----- TABLES ----- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: white;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: var(--uf-dark-blue);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            color: var(--text-muted);
+        }
+
+        /* ----- CODE BLOCK ----- */
+        pre {
+            background-color: #f8fbfd;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #d1dfeb;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #333333;
+            border-left: 4px solid var(--uf-teal);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <!-- Logo UF estilizado -->
+            <div class="logo-container">
+                <span class="logo-u">U</span><span class="logo-f">F</span>
+            </div>
+            <h2>Universitario de Formación</h2>
+            <p>MANUAL DE ADMISIONES - BETA1</p>
+        </div>
+        <div class="nav-menu">
+            <button class="nav-btn active" id="btn-glosario" onclick="openTab(event, 'glosario')"><span>1</span> Glosario de Términos</button>
+            <button class="nav-btn" id="btn-kommo" onclick="openTab(event, 'kommo')"><span>2</span> CRM Kommo & Ventas</button>
+            <button class="nav-btn" id="btn-sga" onclick="openTab(event, 'sga')"><span>3</span> SGA e Inscripción</button>
+            <button class="nav-btn" id="btn-comunicaciones" onclick="openTab(event, 'comunicaciones')"><span>4</span> Comunicaciones Internas</button>
+            <button class="nav-btn" id="btn-programas" onclick="openTab(event, 'programas')"><span>5</span> Procesos por Programa</button>
+            <button class="nav-btn" id="btn-politicas" onclick="openTab(event, 'politicas')"><span>6</span> Facturación y Auditorías</button>
+            <button class="nav-btn" id="btn-comisiones" onclick="openTab(event, 'comisiones')"><span>7</span> Comisiones e Incentivos</button>
+            <button class="nav-btn" id="btn-anexos" onclick="openTab(event, 'anexos')"><span>8</span> Nomenclaturas (SGA)</button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-content">
+        
+        <!-- SECTION 1: GLOSARIO -->
+        <section id="glosario" class="tab-content active">
+            <h1>Glosario Institucional</h1>
+            <div class="title-underline"></div>
+            
+            <div class="card">
+                <p>El presente manual establece los lineamientos estandarizados para la gestión de prospectos dentro del departamento de Admisiones. La correcta ejecución de estas directrices garantiza un seguimiento efectivo, una base de datos organizada y una atención de excelencia.</p>
+                <ul>
+                    <li><strong>LEAD:</strong> Usuario o prospecto inicial que ingresó en el sistema Kommo.</li>
+                    <li><strong>LEAD EFECTIVO:</strong> Usuario que superó las cantidades de interacciones necesarias para establecerse como un cliente potencial y que ha sido trasladado automáticamente al SGA.</li>
+                    <li><strong>GESTIÓN DE INTERESADO:</strong> Cliente potencial que envía documentos habilitantes o indica una promesa firme de pago.</li>
+                    <li><strong>KOMMO:</strong> CRM de mensajería utilizado por el departamento de Admisiones para gestionar las etapas iniciales de la venta.</li>
+                    <li><strong>SGA:</strong> Sistema de Gestión Académica. Plataforma donde se oficializan las matrículas y perfiles de los estudiantes.</li>
+                    <li><strong>SEGUIMIENTOS:</strong> 
+                        <ul>
+                            <li><em>En Kommo:</em> Fases cronológicas en las que se traslada un lead dependiendo de los días de maduración (ej. 1er Seg, 2do Seg).</li>
+                            <li><em>En SGA:</em> Etiquetas exclusivas ingresadas manualmente para identificar el proceso, escenario, duración y costos (ej. <span class="tag">#1-HOMOLOGACION-EP-TSU</span>).</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECTION 2: KOMMO -->
+        <section id="kommo" class="tab-content">
+            <h1>Gestión Comercial y CRM Kommo</h1>
+            <div class="title-underline"></div>
+            
+            <div class="card">
+                <h2>2.1. Segmentación de Embudos (Pipelines)</h2>
+                <p>Para mantener el orden, cada equipo debe operar <strong>exclusivamente</strong> en su embudo asignado:</p>
+                <ul>
+                    <li><strong>Área de Pregrado:</strong> <span class="tag">INSCRIPCIONES</span> y <span class="tag">CAPTACIONES</span></li>
+                    <li><strong>Área de Homologaciones:</strong> <span class="tag">HOMOLOGACIONES T. S.</span></li>
+                    <li><strong>Área de Promoción Corporativa:</strong> <span class="tag">PROMOCIÓN CORPORATIVA</span></li>
+                    <li><strong>Área de Posgrado:</strong> <span class="tag">POSGRADO (TSU + MT)</span></li>
+                    <li><strong>Área de Formación Continua:</strong> <span class="tag">EDUCACIÓN CONTINUA</span></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>2.2. Directrices de Venta Consultiva</h2>
+                <ul>
+                    <li><strong>Tiempos de Respuesta:</strong> La intervención debe darse en menos de <strong>30 minutos</strong> tras el filtro inicial del bot UFITO.</li>
+                    <li><strong>Cero Plantillas Automatizadas:</strong> Queda prohibido bombardear al prospecto con bloques de texto inmensos o PDFs sin previa introducción. Se debe preguntar, escuchar y <em>crear la necesidad</em>. (Fomentar cierres por videollamada para Homologaciones y Posgrados).</li>
+                    <li><strong>Gestión Telefónica:</strong> Se deben realizar llamadas en los horarios de alta contactabilidad (09:00 - 10:30, 12:00 - 14:00, y 16:00 - 18:00). <strong>Es obligatorio dejar notas en Kommo</strong> con el resultado.</li>
+                    <li><strong>Higiene del CRM:</strong> Todo lead en "Gestión de Interesados" DEBE tener una tarea programada. Prohibido tareas caducadas. Si se descarta, enviarlo a "Lead Perdido".</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>2.3. Ciclo de Vida del Lead en Kommo</h2>
+                <ol>
+                    <li><strong>Contacto Inicial:</strong> Solicitar nombres completos, celular y carrera. <em>Si no hay carrera de interés, no se avanza.</em></li>
+                    <li><strong>Presentación de Programa:</strong> Configurar Sede, Modalidad, Carrera y Tipo Inscripción. Validar identidad con cédula o título.</li>
+                    <li><strong>Gestión de Interesados:</strong> Alta intención de cierre. Requiere tarea futura obligatoria.</li>
+                    <li><strong>Retención:</strong> Exclusivo para pagos/saldos de alumnos inscritos (no para falta de documentos).</li>
+                    <li><strong>Captación y Seguimiento:</strong> Cumplir regestión obligatoria en fechas estipuladas.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- SECTION 3: SGA -->
+        <section id="sga" class="tab-content">
+            <h1>Transición Oficial al SGA e Inscripción</h1>
+            <div class="title-underline"></div>
+            
+            <div class="alert">
+                ATENCIÓN: Se omite la creación manual de interesados. El proceso de inscripción se ejecuta directamente buscando el Lead que se ha convertido automáticamente en el SGA.
+            </div>
+
+            <div class="card">
+                <h2>3.1. Proceso de Matriculación (Paso a Paso)</h2>
+                <ol>
+                    <li><strong>Búsqueda:</strong> Ingresar a <em>Registro de Interesado</em> en el SGA y localizar al prospecto con el número de lead de Kommo.</li>
+                    <li><strong>Edición Crítica de Datos:</strong>
+                        <ul>
+                            <li>Validar Nombres, Apellidos y Cédula.</li>
+                            <li><strong>Formato de Celular:</strong> Borrar el "+593" y escribirlo con "09" (Ej. 0912345678).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Ejecutar:</strong> Guardar cambios, clic en "Acciones" y luego "Inscribir".</li>
+                    <li><strong>Ficha Académica:</strong> Completar Colegio (validado en MINEDUC), Título, Carrera, Modalidad, Sesión y Sede.</li>
+                    <li><strong>Beneficios:</strong> Ingresar Código de Promoción verificando el <strong>Reporte 831</strong>.</li>
+                    <li><strong>Carga Documental:</strong> Subir Cédula, Papeleta de Votación, Foto y Título de Bachiller/Tercer Nivel.</li>
+                </ol>
+            </div>
+
+            <div class="card">
+                <h2>3.2. Cursos, Paralelos y Accesos</h2>
+                <ul>
+                    <li><strong>Configuración Obligatoria:</strong> Los inscritos de Homologaciones, Posgrados, TSU y Formación Continua deben agregarse a <em>"Cursos y Escuelas"</em> para generar la facturación. Luego solicitar a Planificación Académica la creación del paralelo.</li>
+                    <li><strong>Correo Institucional:</strong> Entrar al Administrador de Google, crear la cuenta <code>@formacion.edu.ec</code> y usar el número de cédula como contraseña provisional.</li>
+                    <li><strong>Socialización:</strong> Enviar estas credenciales (SGA y Correo) al estudiante y registrarlo en Kommo.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECTION 4: COMUNICACIONES -->
+        <section id="comunicaciones" class="tab-content">
+            <h1>Comunicaciones Interdepartamentales</h1>
+            <div class="title-underline"></div>
+            
+            <div class="card">
+                <h2>4.1. Flujo para Envío de Correos</h2>
+                <p>Para agilizar la comunicación interna, es <strong>obligatorio</strong> aplicar este flujo en correos institucionales:</p>
+                <ul>
+                    <li><strong>Con Secretaría:</strong> No dirigir el mensaje a un solo asistente. Copiar siempre a <code>secretaria.uf@formacion.edu.ec</code>.</li>
+                    <li><strong>Con Bienestar Estudiantil:</strong> Copiar siempre a <code>bienestar.uf@formacion.edu.ec</code>.</li>
+                    <li><strong>Copias Obligatorias de Gestión:</strong> Todo correo debe incluir en "Cc" a:
+                        <br><span class="tag">coordinacion.admisiones@formacion.edu.ec</span>
+                        <br><span class="tag">direccion.promocion@formacion.edu.ec</span>
+                        <br><span class="tag">admisiones.uf@formacion.edu.ec</span>
+                    </li>
+                </ul>
+                <p><em>Regla de Oro: Mantener siempre un trato cordial y respetuoso en cada interacción.</em></p>
+            </div>
+
+            <div class="card alert-danger" style="border-top: 4px solid #d9534f;">
+                <h2 style="color: #b52b27; margin-top: 0;">4.2. Solicitudes a Bienestar Estudiantil (Entrevistas)</h2>
+                <p>Para procesar cualquier solicitud de entrevista (incluso si el aspirante desiste), es <strong>estrictamente necesario</strong>:</p>
+                <ol>
+                    <li>Que el aspirante cuente con su registro de interesado creado en el SGA.</li>
+                    <li>Tener la siguiente documentación cargada en el sistema: <strong>Título de bachiller, Cédula de identidad, Foto, y Certificado de votación</strong>.</li>
+                </ol>
+                <p style="color: #b52b27; font-weight: 700; margin-bottom: 0;">Nota: Caso contrario, Bienestar Estudiantil tiene la disposición directa de rechazar la solicitud de entrevista.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 5: PROGRAMAS -->
+        <section id="programas" class="tab-content">
+            <h1>Procesos Detallados por Programa</h1>
+            <div class="title-underline"></div>
+            
+            <div class="card">
+                <h2>Pregrado (Inscripciones Ordinarias)</h2>
+                <p>Requiere inmediatez máxima. Los documentos habilitantes deben subirse el mismo día del pago para evitar retrasos en las credenciales de acceso institucional.</p>
+            </div>
+
+            <div class="card">
+                <h2>Homologaciones (Ejercicio Profesional y TSU)</h2>
+                <ul>
+                    <li><strong>Tipificación:</strong> Identificar el seguimiento en el SGA con la etiqueta de escenario (ej. <span class="tag">#1-HOMOLOGACION-EP-TSU</span>). Si se omite, se afecta el Reporte 770.</li>
+                    <li><strong>Documentos de Experiencia:</strong> Solicitar Mecanizado IESS, RUC o Certificados laborales.</li>
+                    <li><strong>Formatos:</strong> Descargar el <strong>Reporte 766</strong> y hacer que el alumno firme los 4 formatos: Ejercicio Profesional, Autoevaluación, Vinculación y Prácticas.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Posgrados (Maestrías Tecnológicas)</h2>
+                <ul>
+                    <li><strong>Filtro SENESCYT:</strong> Es obligatorio validar el título de tercer nivel en la SENESCYT antes de avanzar con la oferta.</li>
+                    <li><strong>Experiencia Habilitante:</strong> Mínimo 3 años demostrables. <em>(Excepción: Los TSU y los graduados internos de UF ingresan de forma directa).</em></li>
+                    <li><strong>Regla de Oro:</strong> Prohibido cobrar ningún valor hasta que el perfil sea verificado y aprobado por Secretaría (<code>secretaria.posgrado@formacion.edu.ec</code>).</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Formación Continua</h2>
+                <p>El trabajo no termina en la inscripción. Se requiere:</p>
+                <ul>
+                    <li>Cobranza activa y monitoreo constante de cuotas mensuales.</li>
+                    <li>Asegurar que los alumnos acepten la invitación a Google Classroom.</li>
+                    <li>Al finalizar: Validar cuenta en cero, solicitar diseño e <strong>imprimir los certificados a color en cartulina</strong>.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECTION 6: POLITICAS -->
+        <section id="politicas" class="tab-content">
+            <h1>Políticas de Facturación y Sanciones</h1>
+            <div class="title-underline"></div>
+            
+            <div class="card">
+                <h2>6.1. Solicitudes de Facturación a Financiero</h2>
+                <p>No se deben solicitar rubros nuevos a Secretaría. Todo pago debe enviarse a Financiero usando <strong>obligatoriamente</strong> la siguiente plantilla. Si se omite el concepto "Inscripción y Matrícula", Financiero puede asignar el saldo a otro rubro, anulando la comisión.</p>
+                <pre>
+Para: financiero.uf@formacion.edu.ec
+Cc: direccion.promocion@formacion.edu.ec; coordinacion.admisiones@formacion.edu.ec
+
+Estimados compañeros,
+Reciban un cordial saludo.
+
+Por medio del presente correo solicito su ayuda con la facturación del valor de "$XX" por concepto de Inscripción y Matrícula en el programa "[PROGRAMA]", a nombre del estudiante "[NOMBRE COMPLETO]".
+
+Los datos para la factura son:
+- Nombre:
+- Cédula/RUC:
+- Correo:
+- Dirección:
+- Celular:
+
+Adicionalmente, les pido de favor que me compartan la factura emitida respondiendo a este correo.
+Con gratitud,
+[Firma del Asesor]</pre>
+            </div>
+
+            <div class="card">
+                <h2>6.2. Auditorías y Régimen de Sanciones</h2>
+                <p>Incurrir en faltas operativas resultará en un memorándum formal y la <strong>pérdida total del derecho a comisionar</strong> sobre las ventas afectadas. Se auditará:</p>
+                <ul>
+                    <li>Inscribir estudiantes sin validación previa del título (MINEDUC o SENESCYT).</li>
+                    <li>Omitir o retrasar la carga de documentos habilitantes en el SGA.</li>
+                    <li>Enviar correos de facturación sin usar la plantilla o modificar conceptos indebidamente.</li>
+                    <li>Mantener el CRM Kommo desorganizado (tareas caducadas, clientes sin contactar tras la acción del bot).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECTION 7: COMISIONES -->
+        <section id="comisiones" class="tab-content">
+            <h1>Esquema de Comisiones, Metas e Incentivos</h1>
+            <div class="title-underline"></div>
+
+            <div class="card">
+                <h2>7.1. Área de Pregrado (Mensual)</h2>
+                <p>Las ventas iniciales están cubiertas por el salario base. Al superar el umbral de 20 ventas, la comisión se aplica de forma <strong>retroactiva</strong> a todas las ventas del mes.</p>
+                <table>
+                    <tr>
+                        <th>Tipo de Vendedor</th>
+                        <th>Rango de Ventas</th>
+                        <th>Comisión por Matriculado</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Asesor Junior (SBU)</strong></td>
+                        <td>De 20 ventas en adelante</td>
+                        <td>$15 (Aplica a todas las ventas)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Asesor Senior ($600)</strong></td>
+                        <td>De 20 ventas en adelante</td>
+                        <td>$20 (Aplica a todas las ventas)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>7.2. Homologaciones y Posgrados (Por Cohorte)</h2>
+                <p>Pago condicionado a la apertura del grupo <strong>(Mínimo 15 inscritos matriculados)</strong>. Si cierra con 14 o menos, no hay comisión.</p>
+                <table>
+                    <tr>
+                        <th>Área / Programa</th>
+                        <th>Meta Grupal Alcanzada</th>
+                        <th>Comisión (Financiada)</th>
+                        <th>Comisión (Contado)</th>
+                    </tr>
+                    <tr>
+                        <td rowspan="2"><strong>Pregrado Homologaciones <br>y Posgrado (TSU + MT)</strong></td>
+                        <td>De 15 a 20 inscritos</td>
+                        <td>$15 por venta</td>
+                        <td>$50 por venta fija</td>
+                    </tr>
+                    <tr>
+                        <td>21 inscritos en adelante</td>
+                        <td>$30 por venta</td>
+                        <td>$50 por venta fija</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Posgrado (Solo Maestría MT)</strong></td>
+                        <td>Alcanzando la base de 15</td>
+                        <td>$15 por venta</td>
+                        <td>$30 por venta fija</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>7.3. Educación Continua (Por Cohorte)</h2>
+                <p>El grupo debe iniciar con un mínimo de 20 estudiantes matriculados.</p>
+                <table>
+                    <tr>
+                        <th>Programa</th>
+                        <th>Meta Grupal Alcanzada</th>
+                        <th>Comisión por Matriculado</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Educación Continua</strong></td>
+                        <td>De 20 a 24 inscritos</td>
+                        <td>$10 por venta</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Educación Continua</strong></td>
+                        <td>25 inscritos en adelante</td>
+                        <td>$15 por venta</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>7.4. Reconocimientos Económicos e Incentivos</h2>
+                <p>Otorgados únicamente si se cumplen 4 criterios: Cero errores administrativos, puntualidad perfecta, conversión superior al 10%, y cumplimiento de meta/rentabilidad (mínimo 15% ventas de contado para Posgrados/Homologación).</p>
+                <ul>
+                    <li><strong>Mejor Asesor Pregrado (Mensual):</strong> Bono de $50 + Diploma.</li>
+                    <li><strong>Mejor Asesor Posgrados / Homologación / Continua (Bimestral):</strong> Bono de $75 + Diploma.</li>
+                    <li><strong>Incentivo Anual (Paquete de Viaje):</strong> Al asesor con mayor volumen neto de ventas a nivel general (Corte: 30 de noviembre).</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>7.5. Plan de Crecimiento y Ascenso (UFA a UFB)</h2>
+                <p>Un Asesor Junior (UFA) asciende a Senior (UFB - base $600) al cumplir metas de alto rendimiento durante <strong>6 meses consecutivos</strong> (una falta reinicia el periodo):</p>
+                <ul>
+                    <li><strong>Pregrado:</strong> Mínimo 20 inscritos mensuales de forma ininterrumpida.</li>
+                    <li><strong>Posgrado/Homologaciones:</strong> Aportar mínimo 15 inscritos individuales por cohorte, garantizando 2 ventas de contado.</li>
+                    <li><strong>Educación Continua:</strong> Asegurar apertura de grupos con mínimo 20 estudiantes inscritos constantemente.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECTION 8: ANEXOS -->
+        <section id="anexos" class="tab-content">
+            <h1>Nomenclaturas de Seguimientos (SGA)</h1>
+            <div class="title-underline"></div>
+
+            <div class="card">
+                <p>Listado de etiquetas exactas para control de procesos y facturación en el SGA:</p>
+                <table>
+                    <tr>
+                        <th>Etiqueta a Ingresar</th>
+                        <th>Proceso</th>
+                        <th>Escenario / Condición</th>
+                    </tr>
+                    <tr>
+                        <td><span class="tag">#1-HOMOLOGACION-VC-MATERIAS</span></td>
+                        <td>Val. Conocimientos</td>
+                        <td>Materias</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag">#1-HOMOLOGACION-EP-TRABAJADOR</span></td>
+                        <td>Ej. Profesional</td>
+                        <td>Trabajador (IESS)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag">#1-HOMOLOGACION-EP-EMPRENDEDOR</span></td>
+                        <td>Ej. Profesional</td>
+                        <td>Emprendedor (RUC)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag">#1-HOMOLOGACION-EP-TSU</span></td>
+                        <td>Ej. Profesional</td>
+                        <td>Título TSU</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag">#2-2400-400-1</span></td>
+                        <td>Valores Financieros</td>
+                        <td>Ej. $2400 total, $400 inicial, 1 cuota</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag">#3-CNEL-2023/12/02-8</span></td>
+                        <td>Planificación de Cohorte</td>
+                        <td>Ej. Origen CNEL, Inicio 02/12/2023, 8 meses</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- INTERACTIVITY SCRIPT -->
+    <script>
+        function openTab(evt, tabId) {
+            // Hide all sections
+            var tabContents = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            // Remove 'active' class from all buttons
+            var navBtns = document.getElementsByClassName("nav-btn");
+            for (var i = 0; i < navBtns.length; i++) {
+                navBtns[i].classList.remove("active");
+            }
+            
+            // Show current tab and add active class to button
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+
+            // Scroll main content to top
+            document.querySelector('.main-content').scrollTop = 0;
+        }
+    </script>
+</body>
+</html>
