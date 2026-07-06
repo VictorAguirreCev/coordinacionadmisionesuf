@@ -49,6 +49,7 @@
             border-bottom: 5px solid var(--uf-teal);
         }
 
+        /* Logo Estilizado UF */
         .logo-container {
             display: flex;
             align-items: center;
@@ -279,6 +280,7 @@
             color: var(--text-muted);
         }
 
+        /* ----- CODE BLOCK ----- */
         pre {
             background-color: #f8fbfd;
             padding: 20px;
@@ -301,7 +303,7 @@
                 <span class="logo-u">U</span><span class="logo-f">F</span>
             </div>
             <h2>Universitario de Formación</h2>
-            <p>MANUAL DE ADMISIONES - BETA 1.3</p>
+            <p>MANUAL DE ADMISIONES - BETA 1.4</p>
         </div>
         <div class="nav-menu">
             <button class="nav-btn active" id="btn-bienvenida" onclick="openTab(event, 'bienvenida')"><span>★</span> Bienvenida</button>
@@ -311,7 +313,7 @@
             <button class="nav-btn" id="btn-documentos" onclick="openTab(event, 'documentos')"><span>4</span> Carga Documentos (SGA)</button>
             <button class="nav-btn" id="btn-comunicaciones" onclick="openTab(event, 'comunicaciones')"><span>5</span> Comunicaciones Internas</button>
             <button class="nav-btn" id="btn-programas" onclick="openTab(event, 'programas')"><span>6</span> Procesos por Programa</button>
-            <button class="nav-btn" id="btn-politicas" onclick="openTab(event, 'politicas')"><span>7</span> Facturación y Auditorías</button>
+            <button class="nav-btn" id="btn-costos" onclick="openTab(event, 'costos')"><span>7</span> Costos y Facturación</button>
             <button class="nav-btn" id="btn-comisiones" onclick="openTab(event, 'comisiones')"><span>8</span> Comisiones e Incentivos</button>
             <button class="nav-btn" id="btn-anexos" onclick="openTab(event, 'anexos')"><span>9</span> Nomenclaturas (SGA)</button>
         </div>
@@ -338,7 +340,7 @@
                     Este manual ha sido diseñado de manera estructurada y dinámica para facilitar tu trabajo diario. Navega por el menú lateral para consultar rápidamente nuestras directrices, formatos y normativas oficiales.
                 </p>
                 
-                <button onclick="openTab(event, 'glosario')" style="margin-top: 20px; background-color: var(--uf-dark-blue); color: white; border: none; padding: 12px 30px; font-size: 1rem; border-radius: 30px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s;">
+                <button onclick="goToTab('glosario')" style="margin-top: 20px; background-color: var(--uf-dark-blue); color: white; border: none; padding: 12px 30px; font-size: 1rem; border-radius: 30px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s;">
                     Comenzar Lectura ➔
                 </button>
             </div>
@@ -646,13 +648,77 @@
             </div>
         </section>
 
-        <section id="politicas" class="tab-content">
-            <h1>Políticas de Facturación y Sanciones</h1>
+        <section id="costos" class="tab-content">
+            <h1>Costos, Facturación y Auditorías</h1>
             <div class="title-underline"></div>
             
             <div class="card">
-                <h2>7.1. Solicitudes de Facturación a Financiero</h2>
-                <p>No se deben solicitar rubros nuevos a Secretaría. Todo pago debe enviarse a Financiero usando <strong>obligatoriamente</strong> la siguiente plantilla. Si se omite el concepto "Inscripción y Matrícula", Financiero puede asignar el saldo a otro rubro, anulando la comisión.</p>
+                <h2>7.1. Tabla de Valores Institucionales (Resolución ACTA-UF-OCS-2026-17)</h2>
+                <table>
+                    <tr>
+                        <th>Programa / Sede / Modalidad</th>
+                        <th>Costo de Inscripción</th>
+                        <th>Costo de Matrícula</th>
+                        <th>Costo Cuota</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Pregrado Ordinaria (Santa Elena)</strong></td>
+                        <td>$30</td>
+                        <td>$90</td>
+                        <td>Según malla</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pregrado (Nacional - Línea)</strong></td>
+                        <td>$50</td>
+                        <td>$100</td>
+                        <td>Según malla</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pregrado (Guayaquil - Presencial / Semipresencial)</strong></td>
+                        <td>$50</td>
+                        <td>$100</td>
+                        <td>Según malla</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Homologaciones</strong></td>
+                        <td>$130</td>
+                        <td>$270</td>
+                        <td>Según malla</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Posgrado (TSU + MT)</strong></td>
+                        <td>$250</td>
+                        <td>$510</td>
+                        <td>Según malla</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Posgrado (Directo a Maestría con TSU)</strong></td>
+                        <td>$100</td>
+                        <td>$200</td>
+                        <td>$120</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Formación Continua</strong></td>
+                        <td>$25</td>
+                        <td>$50</td>
+                        <td>Según malla</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card alert-danger" style="border-top: 4px solid #d9534f;">
+                <h2 style="color: #b52b27; margin-top: 0;">7.2. Auditoría y Procedimiento Crítico en el SGA</h2>
+                <p>Es <strong>OBLIGATORIO</strong> verificar meticulosamente las finanzas en el SGA al procesar una inscripción, ya que esto afecta directamente el <em>Reporte 465</em> y nuestra efectividad general.</p>
+                <ul style="color: #333;">
+                    <li><strong style="color: #d9534f;">PROCEDIMIENTO INCORRECTO:</strong> Unificar el valor de inscripción y matrícula en un solo monto utilizando el código manual <strong>OTR</strong>. <em>Consecuencia:</em> Si la facturación se envía así (especialmente con tarjeta de crédito), el sistema contabiliza esto como una <strong>venta no realizada</strong>, afectando las comisiones del asesor.</li>
+                    <li><strong style="color: #00a650;">PROCEDIMIENTO CORRECTO:</strong> Los valores de Inscripción y Matrícula deben registrarse de forma independiente en el SGA, y <strong>AMBOS</strong> deben utilizar obligatoriamente el código <strong>INS</strong>.</li>
+                </ul>
+                <p style="color: #b52b27; font-weight: 700; margin-bottom: 0;">Sanciones: La omisión de este paso y la falta de verificación derivará en un llamado de atención formal a través de Talento Humano, pudiendo conllevar sanciones administrativas directas.</p>
+            </div>
+
+            <div class="card">
+                <h2>7.3. Solicitudes de Facturación a Financiero</h2>
+                <p>No se deben solicitar rubros nuevos a Secretaría. Todo pago debe enviarse a Financiero usando <strong>obligatoriamente</strong> la siguiente plantilla:</p>
                 <pre>
 Para: financiero.uf@formacion.edu.ec
 Cc: direccion.promocion@formacion.edu.ec; coordinacion.admisiones@formacion.edu.ec
@@ -672,17 +738,6 @@ Los datos para la factura son:
 Adicionalmente, les pido de favor que me compartan la factura emitida respondiendo a este correo.
 Con gratitud,
 [Firma del Asesor]</pre>
-            </div>
-
-            <div class="card">
-                <h2>7.2. Auditorías y Régimen de Sanciones</h2>
-                <p>Incurrir en faltas operativas resultará en un memorándum formal y la <strong>pérdida total del derecho a comisionar</strong> sobre las ventas afectadas. Se auditarán los puntos mencionados a continuación y las situaciones que se consideren pertinentes para aplicar la sanción en caso de fallas administrativas:</p>
-                <ul>
-                    <li>Inscribir estudiantes sin validación previa del título (MINEDUC o SENESCYT).</li>
-                    <li>Omitir o retrasar la carga de documentos habilitantes en el SGA.</li>
-                    <li>Enviar correos de facturación sin usar la plantilla o modificar conceptos indebidamente.</li>
-                    <li>Mantener el CRM Kommo desorganizado (tareas caducadas, clientes sin contactar tras la acción del bot).</li>
-                </ul>
             </div>
         </section>
 
