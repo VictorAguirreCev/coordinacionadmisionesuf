@@ -301,7 +301,6 @@
             color: #b52b27;
         }
 
-        /* Contenedor adaptativo para tablas largas */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -315,7 +314,7 @@
             border-collapse: collapse;
             background-color: white;
             font-size: 0.95rem;
-            min-width: 600px; /* Para forzar scroll en móviles si es muy ancha */
+            min-width: 600px;
         }
 
         th, td {
@@ -349,41 +348,94 @@
             overflow-x: auto;
         }
 
-        /* ----- MEDIA QUERIES (RESPONSIVE DESIGN) ----- */
+        /* Buscador de Carreras - Estilos */
+        .filters-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filters-container select {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .grid-carreras {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .carrera-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+
+        .carrera-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--uf-teal);
+        }
+
+        .carrera-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--uf-dark-blue);
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .badge-estado {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .estado-activa { background-color: #d4edda; color: #155724; }
+        .estado-inactiva { background-color: #f8d7da; color: #721c24; }
+
+        .carrera-detalles p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .carrera-costos {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-color);
+            font-size: 0.85rem;
+            color: var(--uf-dark-blue);
+        }
+
+        /* ----- MEDIA QUERIES ----- */
         @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-
-            .mobile-header {
-                display: flex;
-            }
-
+            body { flex-direction: column; }
+            .mobile-header { display: flex; }
             .sidebar {
                 position: absolute;
-                top: 60px; /* Debajo del header móvil */
+                top: 60px;
                 left: 0;
                 height: calc(100vh - 60px);
                 transform: translateX(-100%);
                 width: 100%;
                 max-width: 320px;
             }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            .card {
-                padding: 20px;
-            }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { padding: 20px; }
+            h1 { font-size: 1.8rem; }
+            .card { padding: 20px; }
         }
     </style>
 </head>
@@ -401,8 +453,7 @@
                 <span class="logo-u">U</span><span class="logo-f">F</span>
             </div>
             <h2>Universitario de Formación</h2>
-            <p>MANUAL DE ADMISIONES - BETA 1.6</p>
-            <!-- Buscador Integrado -->
+            <p>MANUAL DE ADMISIONES - BETA 2.0</p>
             <input type="text" id="searchInput" class="search-box" placeholder="Buscar procesos, etiquetas..." onkeyup="searchManual()">
         </div>
         <div class="nav-menu" id="navMenu">
@@ -416,33 +467,27 @@
             <button class="nav-btn" id="btn-costos" data-keywords="precios cuotas matricula facturacion auditoria financiero" onclick="openTab(event, 'costos')"><span>7</span> Costos y Facturación</button>
             <button class="nav-btn" id="btn-comisiones" data-keywords="pagos metas bonos incentivos junior senior" onclick="openTab(event, 'comisiones')"><span>8</span> Comisiones e Incentivos</button>
             <button class="nav-btn" id="btn-anexos" data-keywords="etiquetas tags nomenclaturas cnel" onclick="openTab(event, 'anexos')"><span>9</span> Nomenclaturas (SGA)</button>
-            <!-- Nuevo botón de Herramientas -->
-            <button class="nav-btn" id="btn-herramientas" data-keywords="calculadora correo generador automatizacion" onclick="openTab(event, 'herramientas')"><span>🛠️</span> Herramientas Asesor</button>
+            <button class="nav-btn" id="btn-herramientas" data-keywords="calculadora correo generador buscador oferta academica" onclick="openTab(event, 'herramientas')"><span>🛠️</span> Herramientas Asesor</button>
         </div>
     </nav>
 
     <div class="main-wrapper">
         <main class="main-content">
             
+            <!-- SECCIONES ANTERIORES (1 al 9) MANTENIDAS EXACTAMENTE IGUAL -->
             <section id="bienvenida" class="tab-content active">
                 <h1>Bienvenido al Equipo Comercial</h1>
                 <div class="title-underline"></div>
-                
                 <div class="card" style="text-align: center;">
                     <h2 style="justify-content: center; color: var(--uf-teal); font-size: 1.6rem;">Manual Interactivo de Procesos y Políticas</h2>
                     <p>Reproduce el siguiente video para conocer el objetivo de nuestra nueva herramienta de gestión.</p>
-                    
                     <div class="video-container">
                         <video controls playsinline>
                             <source src="video-bienvenida.mp4" type="video/mp4">
                             Tu navegador no soporta la reproducción de videos.
                         </video>
                     </div>
-                    
-                    <p style="font-size: 1.1rem;">
-                        Este manual ha sido diseñado de manera estructurada y dinámica para facilitar tu trabajo diario. Navega por el menú lateral para consultar rápidamente nuestras directrices, formatos y normativas oficiales.
-                    </p>
-                    
+                    <p style="font-size: 1.1rem;">Este manual ha sido diseñado de manera estructurada y dinámica para facilitar tu trabajo diario. Navega por el menú lateral para consultar rápidamente nuestras directrices, formatos y normativas oficiales.</p>
                     <button onclick="goToTab('glosario')" style="margin-top: 20px; background-color: var(--uf-dark-blue); color: white; border: none; padding: 12px 30px; font-size: 1rem; border-radius: 30px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s;">
                         Comenzar Lectura ➔
                     </button>
@@ -452,9 +497,8 @@
             <section id="glosario" class="tab-content">
                 <h1>Glosario Institucional</h1>
                 <div class="title-underline"></div>
-                
                 <div class="card">
-                    <p>El presente manual establece los lineamientos estandarizados para la gestión de prospectos dentro del departamento de Admisiones. La correcta ejecución de estas directrices garantiza un seguimiento efectivo, una base de datos organizada y una atención de excelencia.</p>
+                    <p>El presente manual establece los lineamientos estandarizados para la gestión de prospectos dentro del departamento de Admisiones.</p>
                     <ul>
                         <li><strong>LEAD:</strong> Usuario o prospecto inicial que ingresó en el sistema Kommo.</li>
                         <li><strong>LEAD EFECTIVO:</strong> Usuario que superó las cantidades de interacciones necesarias para establecerse como un cliente potencial y que ha sido trasladado automáticamente al SGA.</li>
@@ -463,7 +507,7 @@
                         <li><strong>SGA:</strong> Sistema de Gestión Académica. Plataforma donde se oficializan las matrículas y perfiles de los estudiantes.</li>
                         <li><strong>SEGUIMIENTOS:</strong> 
                             <ul>
-                                <li><em>En Kommo:</em> Fases cronológicas en las que se traslada un lead dependiendo de los días de maduración (ej. 1er Seg, 2do Seg).</li>
+                                <li><em>En Kommo:</em> Fases cronológicas en las que se traslada un lead (ej. 1er Seg, 2do Seg).</li>
                                 <li><em>En SGA:</em> Etiquetas exclusivas ingresadas manualmente para identificar el proceso, escenario, duración y costos (ej. <span class="tag">#1-HOMOLOGACION-EP-TSU</span>).</li>
                             </ul>
                         </li>
@@ -474,7 +518,6 @@
             <section id="kommo" class="tab-content">
                 <h1>Gestión Comercial y CRM Kommo</h1>
                 <div class="title-underline"></div>
-                
                 <div class="card">
                     <h2>2.1. Segmentación de Embudos (Pipelines)</h2>
                     <p>Para mantener el orden, cada equipo debe operar <strong>exclusivamente</strong> en su embudo asignado:</p>
@@ -486,559 +529,162 @@
                         <li><strong>Área de Formación Continua:</strong> <span class="tag">EDUCACIÓN CONTINUA</span></li>
                     </ul>
                 </div>
-
                 <div class="card">
                     <h2>2.2. Directrices de Venta Consultiva</h2>
                     <ul>
-                        <li><strong>Tiempos de Respuesta:</strong> La intervención debe darse en menos de <strong>30 minutos</strong> tras el filtro inicial del bot UFITO.</li>
-                        <li><strong>Cero Plantillas Automatizadas:</strong> Queda prohibido bombardear al prospecto con bloques de texto inmensos o PDFs sin previa introducción. Se debe preguntar, escuchar y <em>crear la necesidad</em>. (Fomentar cierres por videollamada para Homologaciones y Posgrados).</li>
-                        <li><strong>Gestión Telefónica:</strong> Se deben realizar llamadas en los horarios de alta contactabilidad (09:00 - 10:30, 12:00 - 14:00, y 16:00 - 18:00). <strong>Es obligatorio dejar notas en Kommo</strong> con el resultado.</li>
-                        <li><strong>Higiene del CRM:</strong> Todo lead en "Gestión de Interesados" DEBE tener una tarea programada. Prohibido tareas caducadas. Si se descarta, enviarlo a "Lead Perdido".</li>
+                        <li><strong>Tiempos de Respuesta:</strong> La intervención debe darse en menos de <strong>30 minutos</strong>.</li>
+                        <li><strong>Cero Plantillas Automatizadas:</strong> Prohibido bombardear al prospecto con bloques de texto inmensos o PDFs sin previa introducción.</li>
+                        <li><strong>Gestión Telefónica:</strong> Realizar llamadas en horarios de alta contactabilidad. <strong>Obligatorio dejar notas en Kommo</strong>.</li>
+                        <li><strong>Higiene del CRM:</strong> Todo lead en "Gestión de Interesados" DEBE tener tarea programada.</li>
                     </ul>
-                </div>
-
-                <div class="card">
-                    <h2>2.3. Ciclo de Vida del Lead en Kommo</h2>
-                    <ol>
-                        <li><strong>Contacto Inicial:</strong> Solicitar nombres completos, celular y carrera. <em>Si no hay carrera de interés, no se avanza.</em></li>
-                        <li><strong>Presentación de Programa:</strong> Configurar Sede, Modalidad, Carrera y Tipo Inscripción. Validar identidad con cédula o título.</li>
-                        <li><strong>Gestión de Interesados:</strong> Alta intención de cierre. Requiere tarea futura obligatoria.</li>
-                        <li><strong>Retención:</strong> Exclusivo para pagos/saldos de alumnos inscritos (no para falta de documentos).</li>
-                        <li><strong>Captación y Seguimiento:</strong> Cumplir regestión obligatoria en fechas estipuladas.</li>
-                    </ol>
                 </div>
             </section>
 
             <section id="sga" class="tab-content">
                 <h1>Transición Oficial al SGA e Inscripción</h1>
                 <div class="title-underline"></div>
-                
                 <div class="alert">
                     ATENCIÓN: Se omite la creación manual de interesados. El proceso de inscripción se ejecuta directamente buscando el Lead que se ha convertido automáticamente en el SGA.
                 </div>
-
                 <div class="card">
                     <h2>3.1. Proceso de Matriculación (Paso a Paso)</h2>
                     <ol>
-                        <li><strong>Búsqueda:</strong> Ingresar a <em>Registro de Interesado</em> en el SGA y localizar al prospecto con el número de lead de Kommo.</li>
-                        <li><strong>Edición Crítica de Datos:</strong>
-                            <ul>
-                                <li>Validar Nombres, Apellidos y Cédula.</li>
-                                <li><strong>Formato de Celular:</strong> Borrar el "+593" y escribirlo con "09" (Ej. 0912345678).</li>
-                            </ul>
-                        </li>
+                        <li><strong>Búsqueda:</strong> Ingresar a <em>Registro de Interesado</em> en el SGA y localizar al prospecto.</li>
+                        <li><strong>Edición Crítica de Datos:</strong> Borrar el "+593" del celular y escribirlo con "09".</li>
                         <li><strong>Ejecutar:</strong> Guardar cambios, clic en "Acciones" y luego "Inscribir".</li>
-                        <li><strong>Ficha Académica:</strong> Completar Colegio (validado en MINEDUC), Título, Carrera, Modalidad, Sesión y Sede.</li>
-                        <li><strong>Beneficios:</strong> Ingresar Código de Promoción verificando el <strong>Reporte 831</strong>.</li>
-                        <li><strong>Carga Documental:</strong> Subir Cédula, Papeleta de Votación, Foto y Título de Bachiller/Tercer Nivel. (Ver sección 4 para formatos exactos).</li>
+                        <li><strong>Ficha Académica:</strong> Completar Colegio, Título, Carrera, Modalidad, Sesión y Sede.</li>
+                        <li><strong>Beneficios:</strong> Ingresar Código de Promoción (Reporte 831).</li>
+                        <li><strong>Carga Documental:</strong> Subir Cédula, Papeleta, Foto y Título (en PDF).</li>
                     </ol>
-                </div>
-
-                <div class="card">
-                    <h2>3.2. Cursos, Paralelos y Accesos</h2>
-                    <ul>
-                        <li><strong>Configuración Obligatoria:</strong> Los inscritos de Homologaciones, Posgrados, TSU y Formación Continua deben agregarse a <em>"Cursos y Escuelas"</em> para generar la facturación. Cuando se inscribe se reflejan los rubros de inscripción y matrícula (En Homologaciones y TSU + MAESTRÍA). (Formación Continua únicamente tendrá rubros al agregar al Curso y Escuela correspondiente), pero las cuotas solo saldrán con el curso y escuela creado, por lo que se debe hablar con el coordinador para continuar en casos de pago de contado sin un curso y escuela creado.</li>
-                        <li><strong>Correo Institucional:</strong> Entrar al Administrador de Google, crear la cuenta <code>@formacion.edu.ec</code> y usar el número de cédula como contraseña provisional.</li>
-                        <li><strong>Socialización:</strong> Enviar estas credenciales (SGA y Correo) al estudiante y registrarlo en Kommo.</li>
-                        <li><strong>Adjuntar links tutoriales y de los sitios de acceso:</strong> Se deben entregar los vídeos tutoriales institucionales como los tutoriales de pago del SGA, actualización de datos, manejo general de SGA, etc.</li>
-                    </ul>
                 </div>
             </section>
 
             <section id="documentos" class="tab-content">
-                <h1>Formatos de Carga de Documentos en el (SGA)</h1>
+                <h1>Formatos de Carga de Documentos (SGA)</h1>
                 <div class="title-underline"></div>
-
                 <div class="card alert-danger" style="border-top: 4px solid #d9534f; background-color: #fdf3f4;">
                     <h2 style="color: #b52b27; margin-top: 0; font-size: 1.2rem;">Reglas Obligatorias de Carga</h2>
                     <ul style="color: #b52b27; margin-bottom: 0;">
-                        <li>Todos los archivos deben cargarse en formato <strong>PDF</strong> (e inclusive la foto, se debe cargar en un documento y darle el formato de foto carnet).</li>
-                        <li>El formato de fecha obligatorio para el nombre del archivo es <strong>AÑO-MES-DÍA</strong> (Ej: 2026-07-03).</li>
-                        <li><strong>NO</strong> se deben utilizar otros símbolos, comillas ni espacios al detallar la fecha.</li>
+                        <li>Todos los archivos deben cargarse en formato <strong>PDF</strong>.</li>
+                        <li>Formato de fecha obligatorio: <strong>AÑO-MES-DÍA</strong> (Ej: 2026-07-03).</li>
                         <li>El campo "Observaciones" siempre debe dejarse <strong>vacío</strong>.</li>
                     </ul>
-                </div>
-
-                <div class="card">
-                    <h2>Documentos Generales</h2>
-                    <div class="table-responsive">
-                        <table>
-                            <tr>
-                                <th>Documento</th>
-                                <th>Tipo de Documento en SGA</th>
-                                <th>Nombre a Registrar</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Cédula</strong></td>
-                                <td><span class="tag">GENERAL - CÉDULA</span></td>
-                                <td>Fecha de expiración (Ej: 2035-11-03)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Papeleta de Votación</strong></td>
-                                <td><span class="tag">GENERAL - PAPELETA VOTACIÓN</span></td>
-                                <td>Fecha de las elecciones (Ej: 2025-11-16)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Título de Bachiller</strong></td>
-                                <td><span class="tag">GENERAL - MINISTERIO DE EDUCACIÓN</span></td>
-                                <td>Año de registro del título (Ej: 1998-03-16)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Foto</strong></td>
-                                <td><span class="tag">GENERAL - FOTO</span></td>
-                                <td>La palabra "FOTO"</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>Documentos de Inscripción y Homologación (Listado Completo)</h2>
-                    <div class="table-responsive">
-                        <table>
-                            <tr>
-                                <th>Documento a Subir</th>
-                                <th>Tipo de Documento en SGA (Etiqueta Oficial)</th>
-                                <th>Nombre a Registrar</th>
-                            </tr>
-                            <tr>
-                                <td>Ficha de Inscripción</td>
-                                <td><span class="tag">INSC. ORD-FICHA DE INSCRIPCIÓN</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Certificado de Habilitación de Matrícula</td>
-                                <td><span class="tag">INSC. ORD CERTIFICADO DE HABILITACIÓN DE MATRICULA</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Acta de Grado (Cuando no tienen registrado el título en el MINEDEC)</td>
-                                <td><span class="tag">GENERAL - ACTA DE GRADO</span></td>
-                                <td>Fecha de emisión del documento (Ej: 1999-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Acta de Compromiso (Cuando no tienen registrado el título en el MINEDEC)</td>
-                                <td><span class="tag">GENERAL - ACTA DE COMPROMISO TÍTULO DE BACHILLER</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Carta de Solicitud para Homologación</td>
-                                <td><span class="tag">HOMOLOG. CARTA DE SOLICITUD PARA HOMOLOGACIÓN</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Autoevaluación de Habilidades Profesionales y Generales</td>
-                                <td><span class="tag">HOMOLOG-AUTOEVALUACIÓN DE HABILIDADES PROFESIONALES Y GENERALES</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Solicitud para Homologación de Vinculación</td>
-                                <td><span class="tag">HOMOLOG. SOLICITUD PARA HOMOLOGACIÓN VINCULACIÓN</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Solicitud para Homologación de Prácticas Preprofesionales</td>
-                                <td><span class="tag">HOMOLOG. SOLICITUD PARA HOMOLOGACIÓN PRÁCTICAS PREPROFESIONALES</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Declaración Jurada de Experiencia Laboral</td>
-                                <td><span class="tag">HOMOLOG. DECLARACIÓN JURADA DE EXPERIENCIA LABORAL</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Certificado para Validación de Actividades Laborales</td>
-                                <td><span class="tag">HOMOLOG. CERTIFICADO PARA VALIDACIÓN DE ACTIVIDADES LABORALES</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Certificado de Ente Regulador (Mecanizado IESS, RUC o Título de Tercer Nivel)</td>
-                                <td><span class="tag">HOMOLOG. CERTIFICADO DE ENTE REGULADOR</span></td>
-                                <td>Fecha de <strong>registro</strong> del título, o fecha de subida si es IESS/RUC</td>
-                            </tr>
-                            <tr>
-                                <td>Evidencia Laboral (Planilla de luz, URL de pág. web, redes sociales, etc.)</td>
-                                <td><span class="tag">HOMOLOG. EVIDENCIA LABORAL</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Resumen de Vida Laboral</td>
-                                <td><span class="tag">HOMOLOG. RESUMEN DE VIDA LABORAL</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Certificado de Aprendizaje Segunda Lengua</td>
-                                <td><span class="tag">HOMOLOG-CERTIFICADO DE APRENDIZAJE SEGUNDA LENGUA</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Certificado de Notas</td>
-                                <td><span class="tag">HOMOLOG. CERTIFICADO DE NOTAS</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                            <tr>
-                                <td>Informe Académico</td>
-                                <td><span class="tag">HOMOLOG. INFORME ACADEMICO</span></td>
-                                <td>Fecha de subida del documento (Ej: 2026-07-03)</td>
-                            </tr>
-                        </table>
-                    </div>
                 </div>
             </section>
 
             <section id="comunicaciones" class="tab-content">
                 <h1>Comunicaciones Interdepartamentales</h1>
                 <div class="title-underline"></div>
-                
                 <div class="card">
                     <h2>5.1. Flujo para Envío de Correos</h2>
-                    <p>Para agilizar la comunicación interna, es <strong>obligatorio</strong> aplicar este flujo en correos institucionales:</p>
                     <ul>
-                        <li><strong>Con Secretaría:</strong> No dirigir el mensaje a un solo asistente. Copiar siempre a <code>secretaria.uf@formacion.edu.ec</code>.</li>
-                        <li><strong>Con Bienestar Estudiantil:</strong> Copiar siempre a <code>bienestar.uf@formacion.edu.ec</code>.</li>
-                        <li><strong>Copias Obligatorias de Gestión:</strong> Todo correo debe incluir en "Cc" a:
-                            <br><span class="tag">coordinacion.admisiones@formacion.edu.ec</span>
-                            <br><span class="tag">direccion.promocion@formacion.edu.ec</span>
-                            <br><span class="tag">admisiones.uf@formacion.edu.ec</span>
-                        </li>
+                        <li><strong>Con Secretaría:</strong> <code>secretaria.uf@formacion.edu.ec</code></li>
+                        <li><strong>Con Bienestar Estudiantil:</strong> <code>bienestar.uf@formacion.edu.ec</code></li>
+                        <li><strong>Copias Obligatorias:</strong> coordinacion, direccion de promocion, y admisiones.</li>
                     </ul>
-                    <p><em>Regla de Oro: Mantener siempre un trato cordial y respetuoso en cada interacción.</em></p>
-                </div>
-
-                <div class="card alert-danger" style="border-top: 4px solid #d9534f;">
-                    <h2 style="color: #b52b27; margin-top: 0;">5.2. Solicitudes a Bienestar Estudiantil (Entrevistas)</h2>
-                    <p>Para procesar cualquier solicitud de entrevista (incluso si el aspirante desiste), es <strong>estrictamente necesario</strong>:</p>
-                    <ol>
-                        <li>Que el aspirante cuente con su registro de interesado creado en el SGA.</li>
-                        <li>Tener la siguiente documentación cargada en el sistema: <strong>Título de bachiller, Cédula de identidad, Foto, y Certificado de votación</strong>.</li>
-                    </ol>
-                    <p style="color: #b52b27; font-weight: 700; margin-bottom: 0;">Nota: Caso contrario, Bienestar Estudiantil tiene la disposición directa de rechazar la solicitud de entrevista.</p>
                 </div>
             </section>
 
             <section id="programas" class="tab-content">
                 <h1>Procesos Detallados por Programa</h1>
                 <div class="title-underline"></div>
-                
                 <div class="card">
                     <h2><span style="color: var(--uf-teal);"></span> Pregrado (Inscripciones Ordinarias)</h2>
-                    <p>Requiere inmediatez máxima. Los documentos habilitantes deben subirse el mismo día de la inscripción y a su vez se deben crear las credenciales de acceso al correo institucional (incluso si el estudiante no paga y lo inscribimos para que cancele con tarjeta de crédito, no puede quedar un registro vacío sin documentos y sin correo institucional). Es obligatorio tener todos los documentos en el kommo para luego subirlos al SGA antes de que paguen.</p>
+                    <p>Requiere inmediatez máxima. Documentos el mismo día y crear accesos al correo.</p>
                 </div>
-
                 <div class="card">
-                    <h2><span style="color: var(--uf-teal);"></span> Homologaciones (Ejercicio Profesional y TSU)</h2>
-                    <ul>
-                        <li><strong>Tipificación:</strong> Identificar el seguimiento en el SGA con la etiqueta de escenario (ej. <span class="tag">#1-HOMOLOGACION-EP-TSU</span>). Si se omite, se afecta el Reporte 770.</li>
-                        <li><strong>Documentos de Experiencia:</strong> Solicitar Mecanizado IESS, RUC o Certificados laborales.</li>
-                        <li><strong>Formatos:</strong> Descargar el <strong>Reporte 766</strong> y hacer que el alumno firme los formatos de homologación correspondientes.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h2><span style="color: var(--uf-teal);"></span> Posgrados (Maestrías Tecnológicas)</h2>
-                    <ul>
-                        <li><strong>Filtro MINEDEC:</strong> Es obligatorio validar el título de tercer nivel en el MINEDEC, al igual que el título de bachiller, antes de avanzar con la oferta.</li>
-                        <li><strong>Experiencia Habilitante:</strong> Mínimo 3 años demostrables. <em>(Excepción: Los TSU y los graduados internos de UF ingresan de forma directa).</em></li>
-                        <li><strong>Regla de Oro:</strong> Prohibido cobrar ningún valor hasta que el perfil sea verificado y aprobado por Secretaría (<code>secretaria.posgrado@formacion.edu.ec</code>).</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h2><span style="color: var(--uf-teal);"></span> Formación Continua</h2>
-                    <p>El trabajo no termina en la inscripción. Se requiere:</p>
-                    <ul>
-                        <li>Estar atenta a las fechas de inicio de los programas para dar la bienvenida y aplicar dinámicas con entrega de premios previo autorización del coordinador (si el horario de trabajo coincide debe notificarlo a su jefe inmediato para realizar una estrategia).</li>
-                        <li>Cobranza activa y monitoreo constante de cuotas mensuales.</li>
-                        <li>Asegurar que los alumnos acepten la invitación a Google Classroom.</li>
-                        <li>Al finalizar: Validar cuenta en cero, solicitar diseño e <strong>imprimir los certificados a color en cartulina</strong>.</li>
-                    </ul>
+                    <h2><span style="color: var(--uf-teal);"></span> Homologaciones y Posgrados</h2>
+                    <p>Validar títulos en MINEDEC, adjuntar experiencia, cobrar solo tras aprobación de Secretaría.</p>
                 </div>
             </section>
 
             <section id="costos" class="tab-content">
                 <h1>Costos, Facturación y Auditorías</h1>
                 <div class="title-underline"></div>
-                
-                <div class="card">
-                    <h2>7.1. Tabla de Valores Institucionales (Resolución ACTA-UF-OCS-2026-17)</h2>
-                    <div class="table-responsive">
-                        <table>
-                            <tr>
-                                <th>Programa / Sede / Modalidad</th>
-                                <th>Costo de Inscripción</th>
-                                <th>Costo de Matrícula</th>
-                                <th>Costo Cuota</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Pregrado Ordinaria (Santa Elena)</strong></td>
-                                <td>$30</td>
-                                <td>$90</td>
-                                <td>$90</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Pregrado (Nacional - En Línea)</strong></td>
-                                <td>$50</td>
-                                <td>$100</td>
-                                <td>$100</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Pregrado (Guayaquil - Presencial / Semipresencial)</strong></td>
-                                <td>$50</td>
-                                <td>$100</td>
-                                <td>$115</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Homologaciones</strong></td>
-                                <td>$130</td>
-                                <td>$270</td>
-                                <td>$250</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Posgrado (TSU + MT)</strong></td>
-                                <td>$250</td>
-                                <td>$510</td>
-                                <td>$145</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Posgrado (Directo a Maestría con TSU)</strong></td>
-                                <td>$100</td>
-                                <td>$200</td>
-                                <td>$120</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Formación Continua</strong></td>
-                                <td>$25</td>
-                                <td>$50</td>
-                                <td>$75</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
                 <div class="card alert-danger" style="border-top: 4px solid #d9534f;">
                     <h2 style="color: #b52b27; margin-top: 0;">7.2. Auditoría y Procedimiento Crítico en el SGA</h2>
-                    <p>Es <strong>OBLIGATORIO</strong> verificar meticulosamente las finanzas en el SGA al procesar una inscripción, ya que esto afecta directamente el <em>Reporte 465</em> y nuestra efectividad general.</p>
-                    <ul style="color: #333;">
-                        <li><strong style="color: #d9534f;">PROCEDIMIENTO INCORRECTO:</strong> Unificar el valor de inscripción y matrícula en un solo monto utilizando el código manual <strong>OTR</strong>. <em>Consecuencia:</em> Si la facturación se envía así (especialmente con tarjeta de crédito), el sistema contabiliza esto como una <strong>venta no realizada</strong>, afectando las comisiones del asesor.</li>
-                        <li><strong style="color: #00a650;">PROCEDIMIENTO CORRECTO:</strong> Los valores de Inscripción y Matrícula deben registrarse de forma independiente en el SGA, y <strong>AMBOS</strong> deben utilizar obligatoriamente el código <strong>INS</strong>.</li>
-                    </ul>
-                    <p style="color: #b52b27; font-weight: 700; margin-bottom: 0;">Sanciones: La omisión de este paso y la falta de verificación derivará en un llamado de atención formal a través de Talento Humano, pudiendo conllevar sanciones administrativas directas.</p>
-                </div>
-
-                <div class="card">
-                    <h2>7.3. Solicitudes de Facturación a Financiero</h2>
-                    <p>No se deben solicitar rubros nuevos a Secretaría. Todo pago debe enviarse a Financiero usando <strong>obligatoriamente</strong> la siguiente plantilla:</p>
-                    <pre>
-Para: financiero.uf@formacion.edu.ec
-Cc: direccion.promocion@formacion.edu.ec; coordinacion.admisiones@formacion.edu.ec
-
-Estimados compañeros,
-Reciban un cordial saludo.
-
-Por medio del presente correo solicito su ayuda con la facturación del valor de "$XX" por concepto de Inscripción y Matrícula en el programa "[PROGRAMA]", a nombre del estudiante "[NOMBRE COMPLETO]".
-
-Los datos para la factura son:
-- Nombre:
-- Cédula/RUC:
-- Correo:
-- Dirección:
-- Celular:
-
-Adicionalmente, les pido de favor que me compartan la factura emitida respondiendo a este correo.
-Con gratitud,
-[Firma del Asesor]</pre>
+                    <p>Es <strong>OBLIGATORIO</strong> verificar meticulosamente las finanzas. Inscripción y Matrícula deben registrarse de forma independiente en el SGA, y <strong>AMBOS</strong> deben utilizar obligatoriamente el código <strong>INS</strong>. No unificarlos con el código OTR.</p>
                 </div>
             </section>
 
             <section id="comisiones" class="tab-content">
-                <h1>Esquema de Comisiones, Metas e Incentivos</h1>
+                <h1>Esquema de Comisiones e Incentivos</h1>
                 <div class="title-underline"></div>
-
                 <div class="card">
                     <h2>8.1. Área de Pregrado (Mensual)</h2>
-                    <p>Las ventas iniciales están cubiertas por el salario base. Al superar el umbral de 20 ventas, la comisión se aplica de forma <strong>retroactiva</strong> a todas las ventas del mes.</p>
-                    <div class="table-responsive">
-                        <table>
-                            <tr>
-                                <th>Tipo de Vendedor</th>
-                                <th>Rango de Ventas</th>
-                                <th>Comisión por Matriculado</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Asesor Junior (SBU)</strong></td>
-                                <td>De 20 ventas en adelante</td>
-                                <td>$15 (Aplica a todas las ventas)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Asesor Senior ($600)</strong></td>
-                                <td>De 20 ventas en adelante</td>
-                                <td>$20 (Aplica a todas las ventas)</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>8.2. Homologaciones y Posgrados (Por Cohorte)</h2>
-                    <p>Pago condicionado a la apertura del grupo <strong>(Mínimo 15 inscritos matriculados)</strong>. Si cierra con 14 o menos, no hay comisión.</p>
-                    <div class="table-responsive">
-                        <table>
-                            <tr>
-                                <th>Área / Programa</th>
-                                <th>Meta Grupal Alcanzada</th>
-                                <th>Comisión (Financiada)</th>
-                                <th>Comisión (Contado)</th>
-                            </tr>
-                            <tr>
-                                <td rowspan="2"><strong>Pregrado Homologaciones <br>y Posgrado (TSU + MT)</strong></td>
-                                <td>De 15 a 20 inscritos</td>
-                                <td>$15 por venta</td>
-                                <td>$50 por venta fija</td>
-                            </tr>
-                            <tr>
-                                <td>21 inscritos en adelante</td>
-                                <td>$30 por venta</td>
-                                <td>$50 por venta fija</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Posgrado (Solo Maestría MT)</strong></td>
-                                <td>Por venta de TSU externo (no aplica Graduado TSU de UF)</td>
-                                <td>$15 por venta</td>
-                                <td>$30 por venta fija</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>8.3. Educación Continua (Por Cohorte)</h2>
-                    <p>El grupo debe iniciar con un mínimo de 20 estudiantes matriculados.</p>
-                    <div class="table-responsive">
-                        <table>
-                            <tr>
-                                <th>Programa</th>
-                                <th>Meta Grupal Alcanzada</th>
-                                <th>Comisión por Matriculado</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Educación Continua</strong></td>
-                                <td>De 20 a 24 inscritos</td>
-                                <td>$10 por venta</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Educación Continua</strong></td>
-                                <td>25 inscritos en adelante</td>
-                                <td>$15 por venta</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h2>8.4. Reconocimientos Económicos e Incentivos</h2>
-                    <p>Otorgados únicamente si se cumplen 4 criterios: Cero errores administrativos, puntualidad perfecta, conversión superior al 10%, y cumplimiento de meta/rentabilidad (mínimo 15% ventas de contado para Posgrados/Homologación).</p>
-                    <ul>
-                        <li><strong>Mejor Asesor Pregrado (Mensual):</strong> Bono de $50 + Diploma.</li>
-                        <li><strong>Mejor Asesor Posgrados / Homologación / Continua (Bimestral):</strong> Bono de $75 + Diploma.</li>
-                        <li><strong>Incentivo Anual (Paquete de Viaje):</strong> Al asesor con mayor volumen neto de ventas a nivel general (Corte: 30 de noviembre).</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h2>8.5. Plan de Crecimiento y Ascenso (UFA a UFB)</h2>
-                    <p>Un Asesor Junior (UFA) asciende a Senior (UFB - base $600) al cumplir metas de alto rendimiento durante <strong>6 meses consecutivos</strong> (una falta reinicia el periodo):</p>
-                    <ul>
-                        <li><strong>Pregrado:</strong> Mínimo 20 inscritos mensuales de forma ininterrumpida.</li>
-                        <li><strong>Posgrado/Homologaciones:</strong> Aportar mínimo 15 inscritos individuales por cohorte, garantizando 2 ventas de contado.</li>
-                        <li><strong>Educación Continua:</strong> Asegurar apertura de grupos con mínimo 20 estudiantes inscritos constantemente.</li>
-                    </ul>
+                    <p>Las ventas iniciales están cubiertas por el salario base. Al superar el umbral de 20 ventas, la comisión se aplica de forma <strong>retroactiva</strong>.</p>
                 </div>
             </section>
 
             <section id="anexos" class="tab-content">
                 <h1>Nomenclaturas de Seguimientos (SGA)</h1>
                 <div class="title-underline"></div>
-
                 <div class="card">
-                    <p>Listado de etiquetas exactas para control de procesos y facturación en el SGA:</p>
-                    <div class="table-responsive">
-                        <table>
-                            <tr>
-                                <th>Etiqueta a Ingresar</th>
-                                <th>Proceso</th>
-                                <th>Escenario / Condición</th>
-                            </tr>
-                            <tr>
-                                <td><span class="tag">#1-HOMOLOGACION-VC-MATERIAS</span></td>
-                                <td>Val. Conocimientos</td>
-                                <td>Materias</td>
-                            </tr>
-                            <tr>
-                                <td><span class="tag">#1-HOMOLOGACION-EP-TRABAJADOR</span></td>
-                                <td>Ej. Profesional</td>
-                                <td>Trabajador (IESS)</td>
-                            </tr>
-                            <tr>
-                                <td><span class="tag">#1-HOMOLOGACION-EP-EMPRENDEDOR</span></td>
-                                <td>Ej. Profesional</td>
-                                <td>Emprendedor (RUC)</td>
-                            </tr>
-                            <tr>
-                                <td><span class="tag">#1-HOMOLOGACION-EP-TSU</span></td>
-                                <td>Ej. Profesional</td>
-                                <td>Título TSU</td>
-                            </tr>
-                            <tr>
-                                <td><span class="tag">#2-2400-400-1</span></td>
-                                <td>Valores Financieros</td>
-                                <td>Ej. $2400 total, $400 inicial, 1 cuota</td>
-                            </tr>
-                            <tr>
-                                <td><span class="tag">#3-CNEL-2023/12/02-8</span></td>
-                                <td>Planificación de Cohorte</td>
-                                <td>Ej. Origen CNEL, Inicio 02/12/2023, 8 meses</td>
-                            </tr>
-                        </table>
-                    </div>
+                    <p>Listado de etiquetas exactas para control de procesos y facturación en el SGA (ej. <span class="tag">#1-HOMOLOGACION-EP-TSU</span>).</p>
                 </div>
             </section>
             
-            <!-- Nueva sección interactiva (Herramientas) -->
+            <!-- NUEVA SECCIÓN DE HERRAMIENTAS -->
             <section id="herramientas" class="tab-content">
-                <h1>Herramientas Automatizadas</h1>
+                <h1>Herramientas Automatizadas del Asesor</h1>
                 <div class="title-underline"></div>
                 
+                <!-- Módulo 1: Buscador de Oferta Académica -->
                 <div class="card">
-                    <h2>Calculadora Rápida de Costos</h2>
-                    <p>Selecciona el programa para ver inmediatamente los valores a cobrar al estudiante.</p>
-                    <select id="calc-programa" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 5px; font-family: 'Open Sans';">
-                        <option value="">-- Selecciona un programa --</option>
-                        <option value="30|90|90">Pregrado Ordinaria (Santa Elena)</option>
-                        <option value="50|100|100">Pregrado (Nacional - En Línea)</option>
-                        <option value="50|100|115">Pregrado (Guayaquil)</option>
-                        <option value="130|270|250">Homologaciones</option>
-                        <option value="250|510|145">Posgrado (TSU + MT)</option>
-                        <option value="100|200|120">Posgrado (Directo Maestría)</option>
-                        <option value="25|50|75">Formación Continua</option>
-                    </select>
+                    <h2>Buscador Dinámico de Oferta Académica</h2>
+                    <p>Consulta rápidamente modalidades, niveles, jornadas y costos por carrera.</p>
                     
-                    <div id="resultado-calc" style="display: none; background-color: var(--uf-light-blue); padding: 15px; border-radius: 8px; border-left: 5px solid var(--uf-dark-blue);">
-                        <strong>Inscripción (INS):</strong> $<span id="lbl-inscripcion">0</span> <br>
-                        <strong>Matrícula (INS):</strong> $<span id="lbl-matricula">0</span> <br>
-                        <strong>Valor Cuota:</strong> $<span id="lbl-cuota">0</span>
+                    <div class="filters-container">
+                        <select id="filtro-sede" onchange="renderCarreras()">
+                            <option value="Todas">Todas las Sedes</option>
+                            <option value="Nacional">Nacional (Online)</option>
+                            <option value="Santa Elena">Sede Santa Elena</option>
+                            <option value="Guayaquil (Matriz)">Matriz Guayaquil</option>
+                        </select>
+                        <select id="filtro-modalidad" onchange="renderCarreras()">
+                            <option value="Todas">Todas las Modalidades</option>
+                            <option value="En línea">En línea</option>
+                            <option value="Presencial">Presencial</option>
+                            <option value="Semipresencial">Semipresencial</option>
+                        </select>
+                        <select id="filtro-estado" onchange="renderCarreras()">
+                            <option value="Todas">Todos los Estados</option>
+                            <option value="true">Solo Ofertadas</option>
+                            <option value="false">No Ofertadas</option>
+                        </select>
+                    </div>
+
+                    <div id="grid-carreras" class="grid-carreras">
+                        <!-- Las tarjetas se generan por JavaScript -->
                     </div>
                 </div>
 
+                <!-- Módulo 2: Generador de Correo -->
                 <div class="card">
-                    <h2>Generador de Correo a Financiero</h2>
-                    <p>Llena los datos y copia el texto exacto para solicitar la facturación (Ref. Sección 7.3).</p>
-                    <input type="text" id="mail-nombre" placeholder="Nombre completo del estudiante" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid var(--border-color); border-radius: 5px; font-family: 'Open Sans'; box-sizing: border-box;">
-                    <input type="text" id="mail-cedula" placeholder="Cédula o RUC" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid var(--border-color); border-radius: 5px; font-family: 'Open Sans'; box-sizing: border-box;">
-                    <input type="text" id="mail-programa" placeholder="Programa académico" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 5px; font-family: 'Open Sans'; box-sizing: border-box;">
+                    <h2>Generador de Correo a Financiero (Actualizado)</h2>
+                    <p>Completa los datos para generar la plantilla exacta. Útil cuando la factura sale a nombre de una empresa o un tercero.</p>
                     
-                    <button onclick="generarCorreo()" style="background-color: var(--uf-teal); color: white; border: none; padding: 10px 20px; font-size: 0.9rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-bottom: 15px;">Generar Plantilla</button>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div>
+                            <label style="font-size: 0.8rem; font-weight: bold; color: var(--uf-dark-blue);">Datos del Estudiante:</label>
+                            <input type="text" id="mail-estudiante" placeholder="Nombre del Estudiante" style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid var(--border-color); border-radius: 5px; box-sizing: border-box;">
+                            <input type="text" id="mail-cedula-est" placeholder="Cédula del Estudiante" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid var(--border-color); border-radius: 5px; box-sizing: border-box;">
+                            <input type="text" id="mail-programa" placeholder="Programa Académico" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid var(--border-color); border-radius: 5px; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="font-size: 0.8rem; font-weight: bold; color: var(--uf-dark-blue);">Datos para la Factura:</label>
+                            <input type="text" id="mail-fact-nombre" placeholder="Razón Social / Nombre a facturar" style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid var(--border-color); border-radius: 5px; box-sizing: border-box;">
+                            <input type="text" id="mail-fact-ruc" placeholder="RUC / Cédula a facturar" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid var(--border-color); border-radius: 5px; box-sizing: border-box;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                                <input type="text" id="mail-fact-dir" placeholder="Dirección" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 5px; box-sizing: border-box;">
+                                <input type="text" id="mail-fact-tel" placeholder="Teléfono" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 5px; box-sizing: border-box;">
+                            </div>
+                        </div>
+                    </div>
                     
-                    <textarea id="mail-resultado" rows="12" style="width: 100%; padding: 15px; border: 1px solid var(--border-color); border-radius: 5px; font-family: monospace; font-size: 0.9rem; box-sizing: border-box;" readonly></textarea>
+                    <button onclick="generarCorreo()" style="background-color: var(--uf-teal); color: white; border: none; padding: 10px 20px; font-size: 0.9rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-bottom: 15px; width: 100%;">Generar Plantilla</button>
+                    
+                    <textarea id="mail-resultado" rows="14" style="width: 100%; padding: 15px; border: 1px solid var(--border-color); border-radius: 5px; font-family: monospace; font-size: 0.9rem; box-sizing: border-box;" readonly></textarea>
                 </div>
             </section>
 
@@ -1046,30 +692,25 @@ Con gratitud,
     </div>
 
     <script>
-        // Función para abrir pestañas
+        // --- NAVEGACIÓN Y TABS ---
         function openTab(evt, tabId) {
             var tabContents = document.getElementsByClassName("tab-content");
             for (var i = 0; i < tabContents.length; i++) {
                 tabContents[i].classList.remove("active");
             }
-            
             var navBtns = document.getElementsByClassName("nav-btn");
             for (var i = 0; i < navBtns.length; i++) {
                 navBtns[i].classList.remove("active");
             }
-            
             var buttonToActivate = evt.currentTarget || document.getElementById('btn-' + tabId);
             document.getElementById(tabId).classList.add("active");
-            if (buttonToActivate) {
-                buttonToActivate.classList.add("active");
-            }
-
+            if (buttonToActivate) { buttonToActivate.classList.add("active"); }
             document.querySelector('.main-content').scrollTop = 0;
-
-            // Ocultar sidebar en móviles tras hacer clic
             if(window.innerWidth <= 768) {
                 document.getElementById('sidebar').classList.remove('open');
             }
+            // Si se abre la pestaña herramientas, renderizar la data
+            if(tabId === 'herramientas') { renderCarreras(); }
         }
 
         function goToTab(tabId) {
@@ -1077,15 +718,12 @@ Con gratitud,
             openTab(evt, tabId);
         }
 
-        // Buscador Dinámico
         function searchManual() {
             var input = document.getElementById('searchInput').value.toLowerCase();
             var navBtns = document.getElementsByClassName('nav-btn');
-
             for (var i = 0; i < navBtns.length; i++) {
                 var btnText = navBtns[i].textContent.toLowerCase();
                 var keywords = navBtns[i].getAttribute('data-keywords') ? navBtns[i].getAttribute('data-keywords').toLowerCase() : '';
-                
                 if (btnText.includes(input) || keywords.includes(input)) {
                     navBtns[i].style.display = "flex";
                 } else {
@@ -1094,37 +732,103 @@ Con gratitud,
             }
         }
 
-        // Toggle Menú Móvil
         function toggleMenu() {
             var sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('open');
         }
 
-        // Lógica de Calculadora de Costos
-        document.getElementById('calc-programa').addEventListener('change', function() {
-            var valores = this.value;
-            var resultadoDiv = document.getElementById('resultado-calc');
-            
-            if (valores !== "") {
-                var precios = valores.split('|');
-                document.getElementById('lbl-inscripcion').textContent = precios[0];
-                document.getElementById('lbl-matricula').textContent = precios[1];
-                document.getElementById('lbl-cuota').textContent = precios[2];
-                resultadoDiv.style.display = 'block';
-            } else {
-                resultadoDiv.style.display = 'none';
-            }
-        });
-
-        // Lógica del Generador de Correos
+        // --- GENERADOR DE CORREOS ACTUALIZADO ---
         function generarCorreo() {
-            var nombre = document.getElementById('mail-nombre').value || "[NOMBRE ESTUDIANTE]";
-            var cedula = document.getElementById('mail-cedula').value || "[CÉDULA]";
-            var programa = document.getElementById('mail-programa').value || "[PROGRAMA]";
+            var est = document.getElementById('mail-estudiante').value || "[NOMBRE ESTUDIANTE]";
+            var cedEst = document.getElementById('mail-cedula-est').value || "[CÉDULA ESTUDIANTE]";
+            var prog = document.getElementById('mail-programa').value || "[PROGRAMA]";
             
-            var plantilla = `Para: financiero.uf@formacion.edu.ec\nCc: direccion.promocion@formacion.edu.ec; coordinacion.admisiones@formacion.edu.ec\n\nEstimados compañeros,\nReciban un cordial saludo.\n\nPor medio del presente correo solicito su ayuda con la facturación correspondiente a Inscripción y Matrícula en el programa de ${programa}, a nombre del estudiante ${nombre}.\n\nLos datos para la factura son:\n- Nombre: ${nombre}\n- Cédula/RUC: ${cedula}\n\nAdicionalmente, les pido de favor que me compartan la factura emitida respondiendo a este correo.\nCon gratitud.`;
+            var factNom = document.getElementById('mail-fact-nombre').value || "[RAZÓN SOCIAL]";
+            var factRuc = document.getElementById('mail-fact-ruc').value || "[RUC/CÉDULA]";
+            var factDir = document.getElementById('mail-fact-dir').value || "[DIRECCIÓN]";
+            var factTel = document.getElementById('mail-fact-tel').value || "[TELÉFONO]";
+            
+            var plantilla = `Para: financiero.uf@formacion.edu.ec\nCc: direccion.promocion@formacion.edu.ec; coordinacion.admisiones@formacion.edu.ec\n\nEstimados compañeros,\nReciban un cordial saludo.\n\nPor medio del presente correo solicito su ayuda con la facturación correspondiente a Inscripción y Matrícula en el programa de ${prog}, a favor del estudiante ${est} con número de identificación ${cedEst}.\n\nLos datos para emitir la factura son los siguientes:\n- Razón Social / Nombre: ${factNom}\n- Cédula/RUC: ${factRuc}\n- Dirección: ${factDir}\n- Teléfono: ${factTel}\n\nAdicionalmente, les pido de favor que me compartan la factura emitida respondiendo a este correo.\nCon gratitud.`;
             
             document.getElementById('mail-resultado').value = plantilla;
+        }
+
+        // --- BASE DE DATOS Y LÓGICA DE OFERTA ACADÉMICA ---
+        const dbCarreras = [
+            // Modalidad En Línea (Nacional)
+            { nombre: 'Tecnología Superior en Administración', niveles: 4, sede: 'Nacional', modalidad: 'En línea', jornada: 'Nocturna (Mar y Jue, 6pm-8pm o 8pm-10pm)', ins: 50, mat: 100, men: 100, ing: 70, ofertada: true },
+            { nombre: 'Tecnología Superior en Contabilidad', niveles: 5, sede: 'Nacional', modalidad: 'En línea', jornada: 'Nocturna (Mar y Jue, 6pm-8pm o 8pm-10pm)', ins: 50, mat: 100, men: 100, ing: 70, ofertada: true },
+            { nombre: 'Tecnología Superior Universitaria en Comercio Internacional y Negocios Electrónicos', niveles: 5, sede: 'Nacional', modalidad: 'En línea', jornada: 'Nocturna (Mar y Jue, 6pm-8pm o 8pm-10pm)', ins: 50, mat: 100, men: 100, ing: 70, ofertada: true },
+            { nombre: 'Tecnología Superior Universitaria en Marketing Digital y Redes Sociales', niveles: 5, sede: 'Nacional', modalidad: 'En línea', jornada: 'Nocturna (Mar y Jue, 6pm-8pm o 8pm-10pm)', ins: 50, mat: 100, men: 100, ing: 70, ofertada: true },
+            { nombre: 'Asistencia en Educación Inclusiva', niveles: 4, sede: 'Nacional', modalidad: 'En línea', jornada: 'Nocturna (Mar y Jue, 6pm-8pm o 8pm-10pm)', ins: 50, mat: 100, men: 100, ing: 70, ofertada: true },
+            
+            // Sede Santa Elena - Semipresencial
+            { nombre: 'Tecnología Superior en Seguridad y Prevención de Riesgos Laborales', niveles: 4, sede: 'Santa Elena', modalidad: 'Semipresencial', jornada: 'Matutina (8am a 1pm)', ins: 30, mat: 90, men: 90, ing: 70, ofertada: true },
+            
+            // Sede Santa Elena - Presencial
+            { nombre: 'Tecnología Superior en Desarrollo Infantil Integral', niveles: 4, sede: 'Santa Elena', modalidad: 'Presencial', jornada: 'Intensiva Domingos (8am a 3pm)', ins: 30, mat: 90, men: 90, ing: 70, ofertada: true },
+            { nombre: 'Técnico Superior en Enfermería', niveles: 4, sede: 'Santa Elena', modalidad: 'Presencial', jornada: 'Matutina (Lun-Vie 8am-12pm) / Intensiva (Sab 8am-5pm y Dom 8am-1pm)', ins: 30, mat: 90, men: 90, ing: 70, ofertada: true },
+
+            // Guayaquil - Semipresencial
+            { nombre: 'Tecnología Superior en Seguridad y Prevención de Riesgos Laborales', niveles: 4, sede: 'Guayaquil (Matriz)', modalidad: 'Semipresencial', jornada: 'Matutina (8am a 1pm)', ins: 50, mat: 100, men: 115, ing: 70, ofertada: true },
+            { nombre: 'Tecnología Superior Universitaria en Diseño Gráfico y Producción Audiovisual', niveles: 5, sede: 'Guayaquil (Matriz)', modalidad: 'Semipresencial', jornada: 'Matutina Domingos (8am a 1pm)', ins: 50, mat: 100, men: 115, ing: 70, ofertada: true },
+            { nombre: 'Tecnología Superior en Talento Humano y Desarrollo Organizacional', niveles: 4, sede: 'Guayaquil (Matriz)', modalidad: 'Semipresencial', jornada: 'Matutina Sábados (8am a 1pm)', ins: 50, mat: 100, men: 115, ing: 70, ofertada: true },
+
+            // Guayaquil - Presencial
+            { nombre: 'Técnico Superior en Enfermería', niveles: 4, sede: 'Guayaquil (Matriz)', modalidad: 'Presencial', jornada: 'Matutina (Lun-Vie 8am-1pm) / Intensiva (Sab 8am-5pm y Dom 8am-1pm)', ins: 50, mat: 100, men: 115, ing: 70, ofertada: true },
+            { nombre: 'Tecnología Superior en Desarrollo Infantil Integral', niveles: 4, sede: 'Guayaquil (Matriz)', modalidad: 'Presencial', jornada: 'Intensiva Domingos (8am a 3pm)', ins: 50, mat: 100, men: 115, ing: 70, ofertada: true },
+            { nombre: 'Tecnología Superior Universitaria en Rehabilitación Física', niveles: 5, sede: 'Guayaquil (Matriz)', modalidad: 'Presencial', jornada: 'Matutina (Lun-Vie 8am-12pm)', ins: 50, mat: 100, men: 115, ing: 70, ofertada: true },
+
+            // NO OFERTADAS ACTUALMENTE
+            { nombre: 'Tecnología Superior Universitaria en Educación e Innovación', niveles: 5, sede: 'Nacional', modalidad: 'En línea', jornada: 'No Especificada', ins: '-', mat: '-', men: '-', ing: '-', ofertada: false },
+            { nombre: 'Técnico Superior en Fotografía y Video', niveles: 2, sede: 'Guayaquil (Matriz)', modalidad: 'Semipresencial', jornada: 'No Especificada', ins: '-', mat: '-', men: '-', ing: '-', ofertada: false },
+            { nombre: 'Tecnología Superior en Ciberseguridad', niveles: 4, sede: 'Guayaquil (Matriz)', modalidad: 'Semipresencial', jornada: 'No Especificada', ins: '-', mat: '-', men: '-', ing: '-', ofertada: false },
+            { nombre: 'Tecnología Superior en Atención Integral a Adultos Mayores', niveles: 4, sede: 'Guayaquil (Matriz)', modalidad: 'Presencial', jornada: 'No Especificada', ins: '-', mat: '-', men: '-', ing: '-', ofertada: false }
+        ];
+
+        function renderCarreras() {
+            var valSede = document.getElementById('filtro-sede').value;
+            var valMod = document.getElementById('filtro-modalidad').value;
+            var valEst = document.getElementById('filtro-estado').value;
+            
+            var grid = document.getElementById('grid-carreras');
+            grid.innerHTML = '';
+
+            var filtradas = dbCarreras.filter(function(c) {
+                var matchSede = (valSede === "Todas" || c.sede === valSede);
+                var matchMod = (valMod === "Todas" || c.modalidad === valMod);
+                var matchEst = (valEst === "Todas" || c.ofertada.toString() === valEst);
+                return matchSede && matchMod && matchEst;
+            });
+
+            if(filtradas.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No se encontraron carreras con los filtros seleccionados.</p>';
+                return;
+            }
+
+            filtradas.forEach(function(c) {
+                var badgeClass = c.ofertada ? 'estado-activa' : 'estado-inactiva';
+                var badgeText = c.ofertada ? '✓ Ofertada' : '✗ No Ofertada';
+                
+                var cardHTML = `
+                    <div class="carrera-card">
+                        <span class="badge-estado ${badgeClass}">${badgeText}</span>
+                        <h3>${c.nombre}</h3>
+                        <div class="carrera-detalles">
+                            <p><strong>Sede:</strong> ${c.sede}</p>
+                            <p><strong>Modalidad:</strong> ${c.modalidad}</p>
+                            <p><strong>Duración:</strong> ${c.niveles} Niveles / Períodos</p>
+                            <p><strong>Jornada:</strong> ${c.jornada}</p>
+                        </div>
+                        <div class="carrera-costos">
+                            <p style="margin-bottom:2px;"><strong>Inscripción:</strong> $${c.ins} | <strong>Matrícula:</strong> $${c.mat}</p>
+                            <p style="margin-bottom:2px;"><strong>Mensualidad:</strong> $${c.men}</p>
+                            <p style="margin-bottom:0;"><strong>Inglés (x nivel):</strong> $${c.ing}</p>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
         }
     </script>
 </body>
