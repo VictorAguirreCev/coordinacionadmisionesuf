@@ -439,14 +439,8 @@
 
         /* ----- MEDIA QUERIES (RESPONSIVE DESIGN) ----- */
         @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-
-            .mobile-header {
-                display: flex;
-            }
-
+            body { flex-direction: column; }
+            .mobile-header { display: flex; }
             .sidebar {
                 position: absolute;
                 top: 60px; /* Debajo del header móvil */
@@ -456,22 +450,10 @@
                 width: 100%;
                 max-width: 320px;
             }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            .card {
-                padding: 20px;
-            }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { padding: 20px; }
+            h1 { font-size: 1.8rem; }
+            .card { padding: 20px; }
         }
     </style>
 </head>
@@ -1079,12 +1061,31 @@
                     <select id="select-programa-maestro" class="form-input" style="font-size: 1rem; font-weight: bold; cursor: pointer;" onchange="actualizarModulos()">
                         <option value="">-- Haz clic aquí para seleccionar una carrera o programa --</option>
                         
-                        <optgroup label="PREGRADO Y HOMOLOGACIONES">
-                            <option value="30|90|90|Tecnología Superior en Administración (Sede Santa Elena)">Pregrado Santa Elena - TS Administración</option>
-                            <option value="50|100|100|Tecnología Superior en Contabilidad (En Línea Nacional)">Pregrado En Línea - TS Contabilidad</option>
-                            <option value="50|100|100|Tecnología Superior Universitaria en Marketing Digital y Redes Sociales (En Línea)">Pregrado En Línea - TSU Marketing Digital</option>
-                            <option value="50|100|115|Tecnología Superior en Desarrollo Infantil Integral (Presencial Guayaquil)">Pregrado Guayaquil - TS Desarrollo Infantil</option>
-                            <option value="130|270|250|Programa de Homologación de Trayectoria Profesional">Homologaciones - Todas las carreras</option>
+                        <optgroup label="PREGRADO EN LÍNEA (NACIONAL)">
+                            <option value="50|100|100|Tecnología Superior en Administración (Modalidad en Línea)">TS Administración (En Línea)</option>
+                            <option value="50|100|100|Tecnología Superior en Contabilidad (Modalidad en Línea)">TS Contabilidad (En Línea)</option>
+                            <option value="50|100|100|Tecnología Superior Universitaria en Comercio Internacional y Negocios Electrónicos (Modalidad en Línea)">TSU Comercio Internacional (En Línea)</option>
+                            <option value="50|100|100|Tecnología Superior Universitaria en Marketing Digital y Redes Sociales (Modalidad en Línea)">TSU Marketing Digital (En Línea)</option>
+                            <option value="50|100|100|Asistencia en Educación Inclusiva (Modalidad en Línea)">Asistencia en Educación Inclusiva (En Línea)</option>
+                        </optgroup>
+
+                        <optgroup label="PREGRADO SEDE SANTA ELENA">
+                            <option value="30|90|90|Tecnología Superior en Seguridad y Prevención de Riesgos Laborales (Semipresencial - Santa Elena)">TS Seguridad y Prevención (Semipresencial)</option>
+                            <option value="30|90|90|Tecnología Superior en Desarrollo Infantil Integral (Presencial - Santa Elena)">TS Desarrollo Infantil (Presencial)</option>
+                            <option value="30|90|90|Técnico Superior en Enfermería (Presencial - Santa Elena)">Técnico en Enfermería (Presencial)</option>
+                        </optgroup>
+
+                        <optgroup label="PREGRADO MATRIZ GUAYAQUIL">
+                            <option value="50|100|115|Tecnología Superior en Seguridad y Prevención de Riesgos Laborales (Semipresencial - Guayaquil)">TS Seguridad y Prevención (Semipresencial)</option>
+                            <option value="50|100|115|Tecnología Superior Universitaria en Diseño Gráfico y Producción Audiovisual (Semipresencial - Guayaquil)">TSU Diseño Gráfico (Semipresencial)</option>
+                            <option value="50|100|115|Tecnología Superior en Talento Humano y Desarrollo Organizacional (Semipresencial - Guayaquil)">TS Talento Humano (Semipresencial)</option>
+                            <option value="50|100|115|Técnico Superior en Enfermería (Presencial - Guayaquil)">Técnico en Enfermería (Presencial)</option>
+                            <option value="50|100|115|Tecnología Superior en Desarrollo Infantil Integral (Presencial - Guayaquil)">TS Desarrollo Infantil (Presencial)</option>
+                            <option value="50|100|115|Tecnología Superior Universitaria en Rehabilitación Física (Presencial - Guayaquil)">TSU Rehabilitación Física (Presencial)</option>
+                        </optgroup>
+
+                        <optgroup label="HOMOLOGACIONES">
+                            <option value="130|270|250|Programa de Homologación de Trayectoria Profesional">Homologaciones (Todas las carreras)</option>
                         </optgroup>
 
                         <optgroup label="POSGRADO (TSU + MAESTRÍA) | 1 Año">
@@ -1297,27 +1298,7 @@
             var factDir = document.getElementById('mail-fact-dir').value || "[DIRECCIÓN]";
             var factTel = document.getElementById('mail-fact-tel').value || "[TELÉFONO]";
             
-            var plantilla = `Para: financiero.uf@formacion.edu.ec
-Cc: direccion.promocion@formacion.edu.ec; coordinacion.admisiones@formacion.edu.ec
-
-Estimados compañeros,
-Reciban un cordial saludo.
-
-Por medio del presente correo solicito su ayuda con la facturación correspondiente al programa de ${prog}, a favor del estudiante ${est} con número de identificación ${cedEst}.
-
-Detalle de los rubros a facturar (Código SGA: INS):
-- Valor de Inscripción: $${valIns}
-- Valor de Matrícula: $${valMat}
-
-Los datos para emitir la factura electrónica son los siguientes:
-- Razón Social / Nombre a facturar: ${factNom}
-- Cédula / RUC a facturar: ${factRuc}
-- Dirección: ${factDir}
-- Teléfono: ${factTel}
-
-Adicionalmente, les pido de favor que me compartan la factura emitida respondiendo a este correo.
-
-Con gratitud.`;
+            var plantilla = `Para: financiero.uf@formacion.edu.ec\nCc: direccion.promocion@formacion.edu.ec; coordinacion.admisiones@formacion.edu.ec\n\nEstimados compañeros,\nReciban un cordial saludo.\n\nPor medio del presente correo solicito su ayuda con la facturación correspondiente al programa de ${prog}, a favor del estudiante ${est} con número de identificación ${cedEst}.\n\nDetalle de los rubros a facturar (Código SGA: INS):\n- Valor de Inscripción: $${valIns}\n- Valor de Matrícula: $${valMat}\n\nLos datos para emitir la factura electrónica son los siguientes:\n- Razón Social / Nombre a facturar: ${factNom}\n- Cédula / RUC a facturar: ${factRuc}\n- Dirección: ${factDir}\n- Teléfono: ${factTel}\n\nAdicionalmente, les pido de favor que me compartan la factura emitida respondiendo a este correo.\n\nCon gratitud.`;
             
             document.getElementById('mail-resultado').value = plantilla;
         }
@@ -1345,25 +1326,25 @@ Con gratitud.`;
             { nombre: 'Tecnología Superior Univ. en Rehabilitación Física', niveles: '5 Niveles', sede: 'Guayaquil (Matriz)', modalidad: 'Presencial', jornada: 'Matutina (Lun-Vie 8am-12pm)', ins: 50, mat: 100, men: 115, ing: 70, ofertada: true },
 
             // Posgrados (TSU + Maestría)
-            { nombre: 'TSU en Seguridad y Prevención + MT en Herramientas de Seguridad Industrial', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 250, mat: 510, men: 145, ing: '-', ofertada: true },
-            { nombre: 'TSU en Administración + MT en Desarrollo e Innovación Digital', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 250, mat: 510, men: 145, ing: '-', ofertada: true },
-            { nombre: 'TSU en Educación e Innovación + MT en Herramientas Digitales (Docencia)', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 250, mat: 510, men: 145, ing: '-', ofertada: true },
-            { nombre: 'TSU en Marketing Digital + MT en Experiencia del Consumidor', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 250, mat: 510, men: 145, ing: '-', ofertada: true },
-            { nombre: 'TSU en Administración + MT en Administración de Sistemas de Salud', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 250, mat: 510, men: 145, ing: '-', ofertada: true },
+            { nombre: 'TSU en Seguridad y Prev. + MT en Herramientas de Seg. Industrial y Salud en el Trabajo', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 250, mat: 510, men: 145, ing: '-', ofertada: true },
+            { nombre: 'TSU en Administración + MT en Desarrollo e Innovación Digital en Inteligencia de Negocios', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 250, mat: 510, men: 145, ing: '-', ofertada: true },
+            { nombre: 'TSU en Educación e Innovación + MT en Herramientas Digitales para la Docencia', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 250, mat: 510, men: 145, ing: '-', ofertada: true },
+            { nombre: 'TSU en Marketing Digital y Redes Sociales + MT en Experiencia del Consumidor y MKT Digital', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 250, mat: 510, men: 145, ing: '-', ofertada: true },
+            { nombre: 'TSU en Administración + MT en Herramientas para la Administración de Sistemas de Salud', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 250, mat: 510, men: 145, ing: '-', ofertada: true },
 
             // Maestrías Tecnológicas Directas
-            { nombre: 'Maestría Tecnológica en Herramientas de Seguridad Industrial y Salud', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 100, mat: 200, men: 120, ing: '-', ofertada: true },
-            { nombre: 'Maestría Tecnológica en Desarrollo e Innovación Digital', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 100, mat: 200, men: 120, ing: '-', ofertada: true },
+            { nombre: 'Maestría Tecnológica en Herramientas de Seguridad Industrial y Salud en el Trabajo', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 100, mat: 200, men: 120, ing: '-', ofertada: true },
+            { nombre: 'Maestría Tecnológica en Desarrollo e Innovación Digital en Inteligencia de Negocios', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 100, mat: 200, men: 120, ing: '-', ofertada: true },
             { nombre: 'Maestría Tecnológica en Herramientas Digitales para la Docencia', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 100, mat: 200, men: 120, ing: '-', ofertada: true },
-            { nombre: 'Maestría Tecnológica en Experiencia del Consumidor y MKT Digital', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 100, mat: 200, men: 120, ing: '-', ofertada: true },
-            { nombre: 'Maestría Tecnológica en Adm. de Sistemas de Salud', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 100, mat: 200, men: 120, ing: '-', ofertada: true },
+            { nombre: 'Maestría Tecnológica en Experiencia del Consumidor y Marketing Digital', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 100, mat: 200, men: 120, ing: '-', ofertada: true },
+            { nombre: 'Maestría Tecnológica en Herramientas para la Administración de Sistemas de Salud', niveles: '1 Año', sede: 'Nacional', modalidad: 'En línea', jornada: 'Lunes y Miércoles (6pm a 9pm)', ins: 100, mat: 200, men: 120, ing: '-', ofertada: true },
 
             // Formación Continua
-            { nombre: 'Curso de Fotografía y Vídeo Profesional + IA Aplicada', niveles: '5 Sábados', sede: 'Guayaquil (Matriz)', modalidad: 'Semipresencial', jornada: 'Sábados (8am a 1pm)', ins: 25, mat: 50, men: 75, ing: '-', ofertada: true },
-            { nombre: 'Curso de Instrumentación Quirúrgica', niveles: '5 Sábados', sede: 'Guayaquil (Matriz)', modalidad: 'Presencial', jornada: 'Sábados (8am a 3pm)', ins: 25, mat: 50, men: 75, ing: '-', ofertada: true },
+            { nombre: 'Fotografía y Vídeo Profesional + IA Aplicada', niveles: '5 Sábados', sede: 'Guayaquil (Matriz)', modalidad: 'Semipresencial', jornada: 'Sábados (8am a 1pm)', ins: 25, mat: 50, men: 75, ing: '-', ofertada: true },
+            { nombre: 'Instrumentación Quirúrgica', niveles: '5 Sábados', sede: 'Guayaquil (Matriz)', modalidad: 'Presencial', jornada: 'Sábados (8am a 3pm)', ins: 25, mat: 50, men: 75, ing: '-', ofertada: true },
 
             // NO OFERTADAS ACTUALMENTE
-            { nombre: 'Tecnología Superior Universitaria en Educación e Innovación', niveles: '5 Niveles', sede: 'Nacional', modalidad: 'En línea', jornada: 'No Especificada', ins: '-', mat: '-', men: '-', ing: '-', ofertada: false },
+            { nombre: 'Tecnología Superior Universitaria en Educación e Innovación (Pregrado)', niveles: '5 Niveles', sede: 'Nacional', modalidad: 'En línea', jornada: 'No Especificada', ins: '-', mat: '-', men: '-', ing: '-', ofertada: false },
             { nombre: 'Técnico Superior en Fotografía y Video', niveles: '2 Períodos', sede: 'Guayaquil (Matriz)', modalidad: 'Semipresencial', jornada: 'No Especificada', ins: '-', mat: '-', men: '-', ing: '-', ofertada: false },
             { nombre: 'Tecnología Superior en Ciberseguridad', niveles: '4 Niveles', sede: 'Guayaquil (Matriz)', modalidad: 'Semipresencial', jornada: 'No Especificada', ins: '-', mat: '-', men: '-', ing: '-', ofertada: false },
             { nombre: 'Tecnología Superior en Atención Integral a Adultos Mayores', niveles: '4 Niveles', sede: 'Guayaquil (Matriz)', modalidad: 'Presencial', jornada: 'No Especificada', ins: '-', mat: '-', men: '-', ing: '-', ofertada: false }
