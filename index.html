@@ -401,7 +401,7 @@
                 <span class="logo-u">U</span><span class="logo-f">F</span>
             </div>
             <h2>Universitario de Formación</h2>
-            <p>MANUAL DE ADMISIONES - BETA 1.5</p>
+            <p>MANUAL DE ADMISIONES - BETA 1.6</p>
             <!-- Buscador Integrado -->
             <input type="text" id="searchInput" class="search-box" placeholder="Buscar procesos, etiquetas..." onkeyup="searchManual()">
         </div>
@@ -416,6 +416,8 @@
             <button class="nav-btn" id="btn-costos" data-keywords="precios cuotas matricula facturacion auditoria financiero" onclick="openTab(event, 'costos')"><span>7</span> Costos y Facturación</button>
             <button class="nav-btn" id="btn-comisiones" data-keywords="pagos metas bonos incentivos junior senior" onclick="openTab(event, 'comisiones')"><span>8</span> Comisiones e Incentivos</button>
             <button class="nav-btn" id="btn-anexos" data-keywords="etiquetas tags nomenclaturas cnel" onclick="openTab(event, 'anexos')"><span>9</span> Nomenclaturas (SGA)</button>
+            <!-- Nuevo botón de Herramientas -->
+            <button class="nav-btn" id="btn-herramientas" data-keywords="calculadora correo generador automatizacion" onclick="openTab(event, 'herramientas')"><span>🛠️</span> Herramientas Asesor</button>
         </div>
     </nav>
 
@@ -1000,6 +1002,45 @@ Con gratitud,
                     </div>
                 </div>
             </section>
+            
+            <!-- Nueva sección interactiva (Herramientas) -->
+            <section id="herramientas" class="tab-content">
+                <h1>Herramientas Automatizadas</h1>
+                <div class="title-underline"></div>
+                
+                <div class="card">
+                    <h2>Calculadora Rápida de Costos</h2>
+                    <p>Selecciona el programa para ver inmediatamente los valores a cobrar al estudiante.</p>
+                    <select id="calc-programa" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 5px; font-family: 'Open Sans';">
+                        <option value="">-- Selecciona un programa --</option>
+                        <option value="30|90|90">Pregrado Ordinaria (Santa Elena)</option>
+                        <option value="50|100|100">Pregrado (Nacional - En Línea)</option>
+                        <option value="50|100|115">Pregrado (Guayaquil)</option>
+                        <option value="130|270|250">Homologaciones</option>
+                        <option value="250|510|145">Posgrado (TSU + MT)</option>
+                        <option value="100|200|120">Posgrado (Directo Maestría)</option>
+                        <option value="25|50|75">Formación Continua</option>
+                    </select>
+                    
+                    <div id="resultado-calc" style="display: none; background-color: var(--uf-light-blue); padding: 15px; border-radius: 8px; border-left: 5px solid var(--uf-dark-blue);">
+                        <strong>Inscripción (INS):</strong> $<span id="lbl-inscripcion">0</span> <br>
+                        <strong>Matrícula (INS):</strong> $<span id="lbl-matricula">0</span> <br>
+                        <strong>Valor Cuota:</strong> $<span id="lbl-cuota">0</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Generador de Correo a Financiero</h2>
+                    <p>Llena los datos y copia el texto exacto para solicitar la facturación (Ref. Sección 7.3).</p>
+                    <input type="text" id="mail-nombre" placeholder="Nombre completo del estudiante" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid var(--border-color); border-radius: 5px; font-family: 'Open Sans'; box-sizing: border-box;">
+                    <input type="text" id="mail-cedula" placeholder="Cédula o RUC" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid var(--border-color); border-radius: 5px; font-family: 'Open Sans'; box-sizing: border-box;">
+                    <input type="text" id="mail-programa" placeholder="Programa académico" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 5px; font-family: 'Open Sans'; box-sizing: border-box;">
+                    
+                    <button onclick="generarCorreo()" style="background-color: var(--uf-teal); color: white; border: none; padding: 10px 20px; font-size: 0.9rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-bottom: 15px;">Generar Plantilla</button>
+                    
+                    <textarea id="mail-resultado" rows="12" style="width: 100%; padding: 15px; border: 1px solid var(--border-color); border-radius: 5px; font-family: monospace; font-size: 0.9rem; box-sizing: border-box;" readonly></textarea>
+                </div>
+            </section>
 
         </main>
     </div>
@@ -1057,6 +1098,33 @@ Con gratitud,
         function toggleMenu() {
             var sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('open');
+        }
+
+        // Lógica de Calculadora de Costos
+        document.getElementById('calc-programa').addEventListener('change', function() {
+            var valores = this.value;
+            var resultadoDiv = document.getElementById('resultado-calc');
+            
+            if (valores !== "") {
+                var precios = valores.split('|');
+                document.getElementById('lbl-inscripcion').textContent = precios[0];
+                document.getElementById('lbl-matricula').textContent = precios[1];
+                document.getElementById('lbl-cuota').textContent = precios[2];
+                resultadoDiv.style.display = 'block';
+            } else {
+                resultadoDiv.style.display = 'none';
+            }
+        });
+
+        // Lógica del Generador de Correos
+        function generarCorreo() {
+            var nombre = document.getElementById('mail-nombre').value || "[NOMBRE ESTUDIANTE]";
+            var cedula = document.getElementById('mail-cedula').value || "[CÉDULA]";
+            var programa = document.getElementById('mail-programa').value || "[PROGRAMA]";
+            
+            var plantilla = `Para: financiero.uf@formacion.edu.ec\nCc: direccion.promocion@formacion.edu.ec; coordinacion.admisiones@formacion.edu.ec\n\nEstimados compañeros,\nReciban un cordial saludo.\n\nPor medio del presente correo solicito su ayuda con la facturación correspondiente a Inscripción y Matrícula en el programa de ${programa}, a nombre del estudiante ${nombre}.\n\nLos datos para la factura son:\n- Nombre: ${nombre}\n- Cédula/RUC: ${cedula}\n\nAdicionalmente, les pido de favor que me compartan la factura emitida respondiendo a este correo.\nCon gratitud.`;
+            
+            document.getElementById('mail-resultado').value = plantilla;
         }
     </script>
 </body>
