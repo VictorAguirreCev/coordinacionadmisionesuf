@@ -406,11 +406,7 @@
         .estado-activa { background-color: #d4edda; color: #155724; }
         .estado-inactiva { background-color: #f8d7da; color: #721c24; }
 
-        .carrera-detalles p {
-            margin: 5px 0;
-            font-size: 0.9rem;
-        }
-
+        .carrera-detalles p { margin: 5px 0; font-size: 0.9rem; }
         .carrera-costos {
             margin-top: 15px;
             padding-top: 10px;
@@ -437,13 +433,13 @@
             display: block;
         }
 
-        /* ----- MEDIA QUERIES (RESPONSIVE DESIGN) ----- */
+        /* ----- MEDIA QUERIES ----- */
         @media (max-width: 768px) {
             body { flex-direction: column; }
             .mobile-header { display: flex; }
             .sidebar {
                 position: absolute;
-                top: 60px; /* Debajo del header móvil */
+                top: 60px;
                 left: 0;
                 height: calc(100vh - 60px);
                 transform: translateX(-100%);
@@ -471,7 +467,7 @@
                 <span class="logo-u">U</span><span class="logo-f">F</span>
             </div>
             <h2>Universitario de Formación</h2>
-            <p>MANUAL DE ADMISIONES - BETA 3.0</p>
+            <p>MANUAL DE ADMISIONES - BETA 4.0</p>
             <!-- Buscador Integrado -->
             <input type="text" id="searchInput" class="search-box" placeholder="Buscar procesos, etiquetas..." onkeyup="searchManual()">
         </div>
@@ -486,8 +482,7 @@
             <button class="nav-btn" id="btn-costos" data-keywords="precios cuotas matricula facturacion auditoria financiero" onclick="openTab(event, 'costos')"><span>7</span> Costos y Facturación</button>
             <button class="nav-btn" id="btn-comisiones" data-keywords="pagos metas bonos incentivos junior senior" onclick="openTab(event, 'comisiones')"><span>8</span> Comisiones e Incentivos</button>
             <button class="nav-btn" id="btn-anexos" data-keywords="etiquetas tags nomenclaturas cnel" onclick="openTab(event, 'anexos')"><span>9</span> Nomenclaturas (SGA)</button>
-            <!-- Nuevo botón de Herramientas -->
-            <button class="nav-btn" id="btn-herramientas" data-keywords="calculadora correo generador buscador oferta academica automatizacion" onclick="openTab(event, 'herramientas')"><span>🛠️</span> Herramientas Asesor</button>
+            <button class="nav-btn" id="btn-herramientas" data-keywords="calculadora correo generador buscador oferta academica automatizacion whatsapp portapapeles" onclick="openTab(event, 'herramientas')"><span>🛠️</span> Herramientas Asesor</button>
         </div>
     </nav>
 
@@ -549,7 +544,7 @@
                     <h2>2.1. Segmentación de Embudos (Pipelines)</h2>
                     <p>Para mantener el orden, cada equipo debe operar <strong>exclusivamente</strong> en su embudo asignado:</p>
                     <ul>
-                        <li><strong>Área de Pregrado:</strong> <span class="tag">INSCRIPCIONES</span> y <span class="tag">CAPTACIONES</span></li>
+                        <li><strong>Área de Pregrado:</strong> <span class="tag">INSCRripciones</span> y <span class="tag">CAPTACIONES</span></li>
                         <li><strong>Área de Homologaciones:</strong> <span class="tag">HOMOLOGACIONES T. S.</span></li>
                         <li><strong>Área de Promoción Corporativa:</strong> <span class="tag">PROMOCIÓN CORPORATIVA</span></li>
                         <li><strong>Área de Posgrado:</strong> <span class="tag">POSGRADO (TSU + MT)</span></li>
@@ -1132,7 +1127,7 @@
                 <!-- Módulo: Generador de Correo Avanzado -->
                 <div class="card">
                     <h2>2. Generador de Correo a Financiero Avanzado</h2>
-                    <p>Completa los datos para generar la plantilla exacta, detallando los valores de matrícula e inscripción, e incluyendo los datos del tercero si la factura es distinta al estudiante.</p>
+                    <p>Completa los datos para generar la plantilla exacta. <strong>Todos los campos del estudiante, dirección y teléfono son obligatorios.</strong></p>
                     
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 20px;">
                         <!-- Bloque Datos Estudiante -->
@@ -1158,22 +1153,56 @@
 
                         <!-- Bloque Facturación -->
                         <div style="background-color: #fcfcfc; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);">
-                            <label class="form-label" style="color: var(--uf-dark-blue);">Datos para la Factura (Dejar vacío si es a nombre del estudiante):</label>
-                            <input type="text" id="mail-fact-nombre" class="form-input" placeholder="Razón Social / Nombre a facturar">
-                            <input type="text" id="mail-fact-ruc" class="form-input" placeholder="RUC / Cédula a facturar">
+                            <label class="form-label" style="color: var(--uf-dark-blue);">Datos para la Factura (Dejar vacío nombre y RUC si es a nombre del estudiante):</label>
+                            <input type="text" id="mail-fact-nombre" class="form-input" placeholder="Razón Social / Nombre a facturar (Opcional)">
+                            <input type="text" id="mail-fact-ruc" class="form-input" placeholder="RUC / Cédula a facturar (Opcional)">
+                            <label class="form-label" style="margin-top: 15px; color: #d9534f;">Datos de contacto (Obligatorios):</label>
                             <input type="text" id="mail-fact-dir" class="form-input" placeholder="Dirección completa">
-                            <input type="text" id="mail-fact-tel" class="form-input" placeholder="Teléfono de contacto">
+                            <input type="text" id="mail-fact-tel" class="form-input" placeholder="Teléfono de contacto (Solo números)">
                         </div>
                     </div>
                     
-                    <button onclick="generarCorreo()" style="background-color: var(--uf-teal); color: white; border: none; padding: 15px; font-size: 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,158,150,0.2);">Generar Plantilla Completa</button>
+                    <button onclick="generarCorreo()" style="background-color: var(--uf-teal); color: white; border: none; padding: 15px; font-size: 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,158,150,0.2);">Generar Plantilla Completa ➔</button>
                     
                     <textarea id="mail-resultado" rows="16" style="width: 100%; padding: 15px; border: 1px solid var(--border-color); border-radius: 5px; font-family: monospace; font-size: 0.95rem; box-sizing: border-box; margin-top: 15px; background-color: #f8fbfd;" readonly placeholder="La plantilla generada aparecerá aquí..."></textarea>
                 </div>
 
+                <!-- Módulo 3: Perfil del Asesor (LocalStorage) -->
+                <div class="card" style="border-top: 4px solid var(--uf-dark-blue);">
+                    <h2>3. Mi Perfil (Autoguardado)</h2>
+                    <p>Guarda tus datos aquí. El manual los recordará siempre, incluso si cierras el navegador, y los usará para firmar tus correos automáticamente.</p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label class="form-label">Tu Nombre (Firma):</label>
+                            <input type="text" id="perfil-nombre" class="form-input" placeholder="Ej. Juan Pérez">
+                        </div>
+                        <div>
+                            <label class="form-label">Tu Celular/Extensión:</label>
+                            <input type="text" id="perfil-telefono" class="form-input" placeholder="Ej. 0912345678">
+                        </div>
+                    </div>
+                    <button onclick="guardarPerfil()" style="background-color: var(--uf-dark-blue); color: white; border: none; padding: 10px 20px; font-size: 0.9rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 15px; width: 100%; transition: 0.3s;">💾 Guardar Mis Datos</button>
+                    <p id="msg-guardado" style="color: green; font-weight: bold; display: none; text-align: center; margin-top: 10px;">¡Datos guardados en la memoria del navegador!</p>
+                </div>
+
+                <!-- Módulo 4: Respuestas Rápidas para WhatsApp -->
+                <div class="card" style="border-top: 4px solid #25D366;">
+                    <h2>4. Respuestas Rápidas (WhatsApp)</h2>
+                    <p>Haz clic en cualquier botón para copiar la plantilla instantáneamente a tu portapapeles y pegarla en Kommo o WhatsApp Web.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px;">
+                        <button onclick="copiarTexto('saludo')" style="background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s;">💬 Copiar: Saludo Inicial</button>
+                        <button onclick="copiarTexto('seguimiento')" style="background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s;">🔄 Copiar: Seguimiento (Día 2)</button>
+                        <button onclick="copiarTexto('documentos')" style="background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s;">📄 Copiar: Solicitud de Documentos</button>
+                        <button onclick="copiarTexto('cuentas')" style="background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s;">🏦 Copiar: Cuentas Bancarias</button>
+                    </div>
+                    <p id="msg-copiado" style="color: #25D366; font-weight: bold; display: none; margin-top: 10px; text-align: center;">¡Texto copiado al portapapeles!</p>
+                </div>
+
                 <!-- Buscador de Oferta Académica Visual -->
                 <div class="card">
-                    <h2>3. Buscador de Mallas y Modalidades</h2>
+                    <h2>5. Buscador de Mallas y Modalidades</h2>
                     <p>Consulta rápidamente modalidades, niveles, jornadas y costos por carrera.</p>
                     
                     <div class="filters-container">
@@ -1251,6 +1280,52 @@
             sidebar.classList.toggle('open');
         }
 
+        // --- LÓGICA DE LOCAL STORAGE (PERFIL DEL ASESOR) ---
+        document.addEventListener('DOMContentLoaded', function() {
+            if(localStorage.getItem('asesorNombre')) {
+                document.getElementById('perfil-nombre').value = localStorage.getItem('asesorNombre');
+            }
+            if(localStorage.getItem('asesorTelefono')) {
+                document.getElementById('perfil-telefono').value = localStorage.getItem('asesorTelefono');
+            }
+        });
+
+        function guardarPerfil() {
+            var nom = document.getElementById('perfil-nombre').value;
+            var tel = document.getElementById('perfil-telefono').value;
+            
+            localStorage.setItem('asesorNombre', nom);
+            localStorage.setItem('asesorTelefono', tel);
+            
+            var msg = document.getElementById('msg-guardado');
+            msg.style.display = 'block';
+            setTimeout(function() { msg.style.display = 'none'; }, 3000);
+        }
+
+        // --- LÓGICA DE CLIPBOARD API (RESPUESTAS RÁPIDAS) ---
+        function copiarTexto(tipo) {
+            var texto = "";
+            var miNombre = localStorage.getItem('asesorNombre') || "un asesor";
+            
+            if(tipo === 'saludo') {
+                texto = `¡Hola! 👋 Soy ${miNombre}, asesor académico del Universitario de Formación. Recibí tu solicitud de información sobre nuestras carreras. ¿Me podrías confirmar tu nombre completo y de qué ciudad nos escribes para enviarte la malla curricular exacta? 🎓`;
+            } else if(tipo === 'seguimiento') {
+                texto = `¡Hola de nuevo! 🌟 Quería saludarte y saber si pudiste revisar la información del programa que te envié ayer. Recuerda que nuestras inscripciones están abiertas y los cupos se están llenando. ¿Tienes alguna duda con la que te pueda ayudar hoy?`;
+            } else if(tipo === 'documentos') {
+                texto = `¡Excelente decisión! 🎉 Para proceder a generar tu matrícula oficial en el sistema, por favor envíame fotos claras o archivos en PDF de los siguientes documentos:\n1. Cédula de Identidad (ambos lados)\n2. Certificado de Votación\n3. Título de Bachiller o Tercer Nivel\n4. Una foto tuya tipo carnet.`;
+            } else if(tipo === 'cuentas') {
+                texto = `A continuación, te detallo nuestras cuentas institucionales autorizadas para realizar el pago de tu inscripción y matrícula 🏦:\n\n- Banco Pichincha: Cta Corriente XXXXXXXX\n- Banco Guayaquil: Cta Corriente YYYYYYYY\n- Nombre: Universitario de Formación\n- RUC: 099XXXXXXX001\n\nPor favor, envíame el comprobante por este medio una vez realizado el depósito o transferencia. ✅`;
+            }
+
+            navigator.clipboard.writeText(texto).then(function() {
+                var msg = document.getElementById('msg-copiado');
+                msg.style.display = 'block';
+                setTimeout(function() { msg.style.display = 'none'; }, 2000);
+            }).catch(function(err) {
+                alert('No se pudo copiar el texto. Intenta de nuevo.');
+            });
+        }
+
         // --- LÓGICA UNIFICADA DE AUTOMATIZACIÓN (CALCULADORA + CORREO) ---
         function actualizarModulos() {
             var select = document.getElementById('select-programa-maestro');
@@ -1264,13 +1339,11 @@
                 var cuo = datos[2];
                 var nombreProg = datos[3];
 
-                // 1. Actualizar Tarjeta de Costos Visuales
                 document.getElementById('lbl-inscripcion').textContent = ins;
                 document.getElementById('lbl-matricula').textContent = mat;
                 document.getElementById('lbl-cuota').textContent = cuo;
                 resultadoDiv.style.display = 'block';
 
-                // 2. Auto-completar el formulario del correo
                 document.getElementById('mail-programa').value = nombreProg;
                 document.getElementById('mail-val-ins').value = ins;
                 document.getElementById('mail-val-mat').value = mat;
@@ -1283,22 +1356,65 @@
             }
         }
 
-        // --- GENERADOR DE CORREOS AVANZADO ---
+        // --- GENERADOR DE CORREOS CON VALIDACIÓN ---
         function generarCorreo() {
-            // Recopilar Datos Estudiante
-            var est = document.getElementById('mail-estudiante').value || "[NOMBRE ESTUDIANTE]";
-            var cedEst = document.getElementById('mail-cedula-est').value || "[CÉDULA ESTUDIANTE]";
-            var prog = document.getElementById('mail-programa').value || "[PROGRAMA SELECCIONADO]";
-            var valIns = document.getElementById('mail-val-ins').value || "0";
-            var valMat = document.getElementById('mail-val-mat').value || "0";
+            var est = document.getElementById('mail-estudiante').value.trim();
+            var cedEst = document.getElementById('mail-cedula-est').value.trim();
+            var prog = document.getElementById('mail-programa').value.trim();
+            var valIns = document.getElementById('mail-val-ins').value.trim();
+            var valMat = document.getElementById('mail-val-mat').value.trim();
+            var factDir = document.getElementById('mail-fact-dir').value.trim();
+            var factTel = document.getElementById('mail-fact-tel').value.trim();
             
-            // Recopilar Datos Facturación (Si están vacíos, asume que es el estudiante)
-            var factNom = document.getElementById('mail-fact-nombre').value || est;
-            var factRuc = document.getElementById('mail-fact-ruc').value || cedEst;
-            var factDir = document.getElementById('mail-fact-dir').value || "[DIRECCIÓN]";
-            var factTel = document.getElementById('mail-fact-tel').value || "[TELÉFONO]";
+            // 1. Validar selección de programa
+            if (prog === "" || prog === "Selecciona un programa arriba...") {
+                alert("⚠️ ALERTA: Es obligatorio seleccionar un Programa Académico de la lista desplegable superior antes de generar el correo.");
+                return; // Bloquea la ejecución
+            }
+
+            // 2. Validar campos vacíos obligatorios
+            if (est === "" || cedEst === "" || valIns === "" || valMat === "" || factDir === "" || factTel === "") {
+                alert("⚠️ ALERTA: Faltan campos obligatorios. Debes llenar los datos del estudiante, valores de pago, dirección completa y teléfono de contacto.");
+                return; // Bloquea la ejecución
+            }
+
+            // 3. Validar Teléfono (Solo números)
+            var phoneRegex = /^[0-9]+$/;
+            if (!phoneRegex.test(factTel)) {
+                alert("⚠️ ALERTA: El campo 'Teléfono de contacto' es inválido. Debes escribir únicamente números, sin espacios ni letras.");
+                return; // Bloquea la ejecución
+            }
+
+            // Recopilar Datos Facturación opcionales (Si están vacíos, asume que es el estudiante)
+            var factNom = document.getElementById('mail-fact-nombre').value.trim() || est;
+            var factRuc = document.getElementById('mail-fact-ruc').value.trim() || cedEst;
             
-            var plantilla = `Para: financiero.uf@formacion.edu.ec\nCc: direccion.promocion@formacion.edu.ec; coordinacion.admisiones@formacion.edu.ec\n\nEstimados compañeros,\nReciban un cordial saludo.\n\nPor medio del presente correo solicito su ayuda con la facturación correspondiente al programa de ${prog}, a favor del estudiante ${est} con número de identificación ${cedEst}.\n\nDetalle de los rubros a facturar (Código SGA: INS):\n- Valor de Inscripción: $${valIns}\n- Valor de Matrícula: $${valMat}\n\nLos datos para emitir la factura electrónica son los siguientes:\n- Razón Social / Nombre a facturar: ${factNom}\n- Cédula / RUC a facturar: ${factRuc}\n- Dirección: ${factDir}\n- Teléfono: ${factTel}\n\nAdicionalmente, les pido de favor que me compartan la factura emitida respondiendo a este correo.\n\nCon gratitud.`;
+            // Extraer nombre del asesor del LocalStorage
+            var firmaAsesor = localStorage.getItem('asesorNombre') || "[Tu Nombre]";
+            
+            var plantilla = `Para: financiero.uf@formacion.edu.ec
+Cc: direccion.promocion@formacion.edu.ec; coordinacion.admisiones@formacion.edu.ec
+
+Estimados compañeros,
+Reciban un cordial saludo.
+
+Por medio del presente correo solicito su ayuda con la facturación correspondiente al programa de ${prog}, a favor del estudiante ${est} con número de identificación ${cedEst}.
+
+Detalle de los rubros a facturar (Código SGA: INS):
+- Valor de Inscripción: $${valIns}
+- Valor de Matrícula: $${valMat}
+
+Los datos para emitir la factura electrónica son los siguientes:
+- Razón Social / Nombre a facturar: ${factNom}
+- Cédula / RUC a facturar: ${factRuc}
+- Dirección: ${factDir}
+- Teléfono: ${factTel}
+
+Adicionalmente, les pido de favor que me compartan la factura emitida respondiendo a este correo.
+
+Con gratitud,
+${firmaAsesor}
+Asesor de Admisiones.`;
             
             document.getElementById('mail-resultado').value = plantilla;
         }
