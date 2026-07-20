@@ -21,6 +21,79 @@
             --border-color: #d1dfeb;
         }
 
+        /* ----- MODO OSCURO ----- */
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #aaaaaa;
+            --border-color: #333333;
+        }
+        body.dark-mode table, body.dark-mode pre {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+        
+        /* ----- REGLAS DE IMPRESIÓN (EXPORTAR A PDF COMPLETO) ----- */
+        @media print {
+            /* 1. Liberar la altura para que el navegador genere múltiples páginas */
+            html, body, .main-wrapper, .main-content {
+                height: auto !important;
+                max-height: none !important;
+                width: 100% !important;
+                overflow: visible !important;
+                display: block !important;
+                position: relative !important;
+                background-color: white !important; /* Forzar fondo blanco */
+            }
+
+            /* 2. Ocultar menús, barra lateral y header móvil */
+            .sidebar, .mobile-header { 
+                display: none !important; 
+            }
+
+            /* 3. Ocultar todos los botones interactivos en el PDF impreso */
+            button {
+                display: none !important;
+            }
+
+            /* 4. Quitar paddings del contenedor para aprovechar el espacio de la hoja */
+            .main-content { 
+                padding: 0 !important; 
+                margin: 0 !important; 
+            }
+
+            /* 5. Evitar que las tarjetas, tablas o listas se partan entre dos páginas */
+            .card { 
+                border: 1px solid #ccc !important; 
+                box-shadow: none !important; 
+                page-break-inside: avoid !important;
+                break-inside: avoid !important; 
+                margin-bottom: 20px !important;
+                background-color: white !important;
+            }
+            
+            table, tr, td, th, li, .video-container {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            /* 6. Asegurar que las tablas usen todo el ancho y se vean claras */
+            table {
+                width: 100% !important;
+            }
+
+            /* 7. Forzar texto en color negro para legibilidad y ahorro de tinta */
+            h1, h2, h3, p, span, div, strong, td, th {
+                color: #000 !important;
+            }
+            
+            /* Ocultar etiquetas de alerta que no sirven en papel */
+            #msg-guardado, #msg-copiado {
+                display: none !important;
+            }
+        }
+
         body {
             font-family: 'Open Sans', sans-serif;
             margin: 0;
@@ -499,6 +572,11 @@
             <button class="nav-btn" id="btn-comisiones" data-keywords="pagos metas bonos incentivos junior senior" onclick="openTab(event, 'comisiones')"><span>8</span> Comisiones e Incentivos</button>
             <button class="nav-btn" id="btn-anexos" data-keywords="etiquetas tags nomenclaturas cnel" onclick="openTab(event, 'anexos')"><span>9</span> Nomenclaturas (SGA)</button>
             <button class="nav-btn" id="btn-herramientas" data-keywords="calculadora correo generador buscador oferta academica automatizacion whatsapp portapapeles bloc" onclick="openTab(event, 'herramientas')"><span>🛠️</span> Herramientas Asesor</button>
+     
+            <!-- Nuevas Herramientas UI/UX -->
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 20px;">
+            <button class="nav-btn" id="btn-dark-mode" onclick="toggleDarkMode()"><span>🌙</span> Modo Oscuro</button>
+            <button class="nav-btn" onclick="window.print()"><span>🖨️</span> Exportar a PDF</button>
         </div>
     </nav>
 
@@ -1311,18 +1389,42 @@
             sidebar.classList.toggle('open');
         }
 
-        // --- LÓGICA DE LOCAL STORAGE (PERFIL DEL ASESOR Y BLOC DE NOTAS) ---
+        // --- LÓGICA DE LOCAL STORAGE (PERFIL, BLOC DE NOTAS Y MODO OSCURO) ---
         document.addEventListener('DOMContentLoaded', function() {
+            // Cargar Perfil
             if(localStorage.getItem('asesorNombre')) {
                 document.getElementById('perfil-nombre').value = localStorage.getItem('asesorNombre');
             }
             if(localStorage.getItem('asesorTelefono')) {
                 document.getElementById('perfil-telefono').value = localStorage.getItem('asesorTelefono');
             }
+            // Cargar Bloc de Notas
             if(localStorage.getItem('blocNotasTemporal')) {
                 document.getElementById('bloc-notas').value = localStorage.getItem('blocNotasTemporal');
             }
+            // Cargar Modo Oscuro
+            if(localStorage.getItem('preferenciaModoOscuro') === 'true') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('btn-dark-mode').innerHTML = '<span>☀️</span> Modo Claro';
+            }
         });
+
+        // --- LÓGICA DE MODO OSCURO ---
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            
+            // Guardar preferencia del usuario en el navegador
+            var isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('preferenciaModoOscuro', isDark);
+            
+            // Actualizar el botón dinámicamente
+            var btnDarkMode = document.getElementById('btn-dark-mode');
+            if (isDark) {
+                btnDarkMode.innerHTML = '<span>☀️</span> Modo Claro';
+            } else {
+                btnDarkMode.innerHTML = '<span>🌙</span> Modo Oscuro';
+            }
+        }
 
         function guardarPerfil() {
             var nom = document.getElementById('perfil-nombre').value;
