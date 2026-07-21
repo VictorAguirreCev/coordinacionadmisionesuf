@@ -572,7 +572,9 @@
             <button class="nav-btn" id="btn-comisiones" data-keywords="pagos metas bonos incentivos junior senior" onclick="openTab(event, 'comisiones')"><span>8</span> Comisiones e Incentivos</button>
             <button class="nav-btn" id="btn-anexos" data-keywords="etiquetas tags nomenclaturas cnel" onclick="openTab(event, 'anexos')"><span>9</span> Nomenclaturas (SGA)</button>
             <button class="nav-btn" id="btn-herramientas" data-keywords="calculadora correo generador buscador oferta academica automatizacion whatsapp portapapeles bloc" onclick="openTab(event, 'herramientas')"><span>🛠️</span> Herramientas Asesor</button>
-     
+            
+            <button class="nav-btn" id="btn-agenda" data-keywords="tareas leads seguimiento recordatorio agenda" onclick="openTab(event, 'agenda')"><span>📅</span> Agenda Leads</button>
+
             <!-- Nuevas Herramientas UI/UX -->
             <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 20px;">
             <button class="nav-btn" id="btn-dark-mode" onclick="toggleDarkMode()"><span>🌙</span> Modo Oscuro</button>
@@ -1341,6 +1343,61 @@
 
             </section>
 
+            <!-- SECCIÓN: AGENDA DE LEADS (CRUD) -->
+            <section id="agenda" class="tab-content">
+                <h1>Agenda de Seguimiento</h1>
+                <div class="title-underline"></div>
+                
+                <div class="card" style="border-top: 4px solid #f39c12;">
+                    <h2>1. Nuevo Recordatorio</h2>
+                    <p>Registra a los prospectos que requieren gestión telefónica o revisión de documentos.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div>
+                            <label class="form-label">Nombre del Lead:</label>
+                            <input type="text" id="task-nombre" class="form-input" placeholder="Ej. María Gómez">
+                        </div>
+                        <div>
+                            <label class="form-label">Programa / Interés:</label>
+                            <input type="text" id="task-programa" class="form-input" placeholder="Ej. TSU Administración">
+                        </div>
+                        <div>
+                            <label class="form-label">Fecha a Contactar:</label>
+                            <input type="date" id="task-fecha" class="form-input">
+                        </div>
+                        <div>
+                            <label class="form-label">Estado:</label>
+                            <select id="task-estado" class="form-input">
+                                <option value="Llamada Inicial">Llamada Inicial</option>
+                                <option value="Envío de Documentos">Envío de Documentos</option>
+                                <option value="Promesa de Pago">Promesa de Pago</option>
+                                <option value="Retención">Retención</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="agregarTarea()" style="background-color: #f39c12; color: white; border: none; padding: 12px 20px; font-size: 0.95rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 20px; transition: 0.3s;">➕ Guardar Recordatorio</button>
+                </div>
+
+                <div class="card">
+                    <h2>2. Mis Tareas Pendientes</h2>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Lead</th>
+                                    <th>Programa</th>
+                                    <th>Estado</th>
+                                    <th style="text-align: center;">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-tareas">
+                                <!-- Las tareas se inyectan aquí con JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
         </main>
     </div>
 
@@ -1407,6 +1464,9 @@
                 document.body.classList.add('dark-mode');
                 document.getElementById('btn-dark-mode').innerHTML = '<span>☀️</span> Modo Claro';
             }
+            
+            // Cargar Tareas de la Agenda
+            cargarTareas();
         });
 
         // --- LÓGICA DE MODO OSCURO ---
@@ -1707,6 +1767,87 @@
                 `;
                 grid.innerHTML += cardHTML;
             });
+        }
+
+        // --- LÓGICA CRUD: AGENDA DE LEADS ---
+        function cargarTareas() {
+            var tareasGuardadas = localStorage.getItem('agendaLeadsUF');
+            var tabla = document.getElementById('tabla-tareas');
+            if (!tabla) return;
+            tabla.innerHTML = ''; // Limpiar tabla
+
+            if (tareasGuardadas) {
+                var tareas = JSON.parse(tareasGuardadas);
+                if(tareas.length === 0) {
+                    tabla.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No tienes tareas pendientes. ¡Buen trabajo!</td></tr>';
+                    return;
+                }
+                
+                // Ordenar por fecha (más próxima primero)
+                tareas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+                tareas.forEach(function(tarea, index) {
+                    // Dar color al badge según el estado
+                    var colorEstado = "#128C7E"; // default
+                    if(tarea.estado === "Promesa de Pago") colorEstado = "#00a650";
+                    else if(tarea.estado === "Envío de Documentos") colorEstado = "#f39c12";
+                    else if(tarea.estado === "Retención") colorEstado = "#d9534f";
+
+                    var fila = `
+                        <tr>
+                            <td><strong>${tarea.fecha}</strong></td>
+                            <td>${tarea.nombre}</td>
+                            <td>${tarea.programa}</td>
+                            <td><span style="background-color: ${colorEstado}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">${tarea.estado}</span></td>
+                            <td style="text-align: center;">
+                                <button onclick="eliminarTarea(${index})" style="background-color: #d9534f; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">✓ Completar</button>
+                            </td>
+                        </tr>
+                    `;
+                    tabla.innerHTML += fila;
+                });
+            } else {
+                tabla.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No tienes tareas pendientes. ¡Buen trabajo!</td></tr>';
+            }
+        }
+
+        function agregarTarea() {
+            var nombre = document.getElementById('task-nombre');
+            var programa = document.getElementById('task-programa');
+            var fecha = document.getElementById('task-fecha');
+            var estado = document.getElementById('task-estado');
+
+            if(!nombre.value || !fecha.value) {
+                alert("⚠️ El nombre del lead y la fecha son obligatorios.");
+                return;
+            }
+
+            var nuevaTarea = {
+                nombre: nombre.value,
+                programa: programa.value || "No especificado",
+                fecha: fecha.value,
+                estado: estado.value
+            };
+
+            var tareasGuardadas = localStorage.getItem('agendaLeadsUF');
+            var tareas = tareasGuardadas ? JSON.parse(tareasGuardadas) : [];
+            
+            tareas.push(nuevaTarea);
+            localStorage.setItem('agendaLeadsUF', JSON.stringify(tareas));
+
+            // Limpiar inputs
+            nombre.value = '';
+            programa.value = '';
+            fecha.value = '';
+
+            cargarTareas();
+        }
+
+        function eliminarTarea(index) {
+            var tareas = JSON.parse(localStorage.getItem('agendaLeadsUF'));
+            tareas.splice(index, 1); // Elimina el elemento en el índice específico
+            localStorage.setItem('agendaLeadsUF', JSON.stringify(tareas));
+            cargarTareas();
         }
     </script>
 </body>
