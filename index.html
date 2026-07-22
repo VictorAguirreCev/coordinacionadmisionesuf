@@ -1347,6 +1347,31 @@
             <section id="agenda" class="tab-content">
                 <h1>Agenda de Seguimiento</h1>
                 <div class="title-underline"></div>
+
+                <!-- MÓDULO DASHBOARD Y EXPORTACIÓN -->
+                <div class="card" style="background-color: var(--uf-dark-blue); color: white; border: none; padding: 25px;">
+                    <h2 style="color: white; margin-top: 0;">Dashboard de Rendimiento Comercial</h2>
+                    <p style="color: #a4c5d9; font-size: 0.9rem;">Métricas calculadas en tiempo real a partir de tu base de datos local.</p>
+                    
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
+                        <div style="flex: 1; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center;">
+                            <span style="font-size: 0.85rem; display: block; color: #b5d1e6; text-transform: uppercase; font-weight: bold;">Leads Pendientes</span>
+                            <strong style="font-size: 2.2rem; font-family: 'Montserrat', sans-serif;" id="dash-total">0</strong>
+                        </div>
+                        <div style="flex: 1; background: rgba(0, 166, 80, 0.2); border: 1px solid #00a650; padding: 15px; border-radius: 8px; text-align: center;">
+                            <span style="font-size: 0.85rem; display: block; color: #d4edda; text-transform: uppercase; font-weight: bold;">Promesas de Pago</span>
+                            <strong style="font-size: 2.2rem; color: #00a650; font-family: 'Montserrat', sans-serif;" id="dash-promesas">0</strong>
+                        </div>
+                        <div style="flex: 1; background: rgba(243, 156, 18, 0.2); border: 1px solid #f39c12; padding: 15px; border-radius: 8px; text-align: center;">
+                            <span style="font-size: 0.85rem; display: block; color: #f9e79f; text-transform: uppercase; font-weight: bold;">Envío de Docs</span>
+                            <strong style="font-size: 2.2rem; color: #f39c12; font-family: 'Montserrat', sans-serif;" id="dash-docs">0</strong>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 25px; text-align: right;">
+                        <button onclick="exportarCSV()" style="background-color: var(--uf-teal); color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">📥 Exportar Base a Excel (CSV)</button>
+                    </div>
+                </div>
                 
                 <div class="card" style="border-top: 4px solid #f39c12;">
                     <h2>1. Nuevo Recordatorio</h2>
@@ -1769,46 +1794,65 @@
             });
         }
 
-        // --- LÓGICA CRUD: AGENDA DE LEADS ---
+        // --- LÓGICA CRUD: DASHBOARD Y RENDERIZADO ---
         function cargarTareas() {
             var tareasGuardadas = localStorage.getItem('agendaLeadsUF');
             var tabla = document.getElementById('tabla-tareas');
             if (!tabla) return;
-            tabla.innerHTML = ''; // Limpiar tabla
+            tabla.innerHTML = ''; 
+
+            // Contadores para el Dashboard
+            var countTotal = 0;
+            var countPromesas = 0;
+            var countDocs = 0;
 
             if (tareasGuardadas) {
                 var tareas = JSON.parse(tareasGuardadas);
+                countTotal = tareas.length;
+                
                 if(tareas.length === 0) {
                     tabla.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No tienes tareas pendientes. ¡Buen trabajo!</td></tr>';
-                    return;
+                } else {
+                    // Ordenar por fecha cronológicamente
+                    tareas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+                    tareas.forEach(function(tarea, index) {
+                        // Lógica de conteo para métricas
+                        if(tarea.estado === "Promesa de Pago") countPromesas++;
+                        if(tarea.estado === "Envío de Documentos") countDocs++;
+
+                        // Lógica de colores UI
+                        var colorEstado = "#128C7E"; 
+                        if(tarea.estado === "Promesa de Pago") colorEstado = "#00a650";
+                        else if(tarea.estado === "Envío de Documentos") colorEstado = "#f39c12";
+                        else if(tarea.estado === "Retención") colorEstado = "#d9534f";
+
+                        var fila = `
+                            <tr>
+                                <td><strong>${tarea.fecha}</strong></td>
+                                <td>${tarea.nombre}</td>
+                                <td>${tarea.programa}</td>
+                                <td><span style="background-color: ${colorEstado}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">${tarea.estado}</span></td>
+                                <td style="text-align: center;">
+                                    <button onclick="eliminarTarea(${index})" style="background-color: #d9534f; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">✓ Completar</button>
+                                </td>
+                            </tr>
+                        `;
+                        tabla.innerHTML += fila;
+                    });
                 }
-                
-                // Ordenar por fecha (más próxima primero)
-                tareas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-
-                tareas.forEach(function(tarea, index) {
-                    // Dar color al badge según el estado
-                    var colorEstado = "#128C7E"; // default
-                    if(tarea.estado === "Promesa de Pago") colorEstado = "#00a650";
-                    else if(tarea.estado === "Envío de Documentos") colorEstado = "#f39c12";
-                    else if(tarea.estado === "Retención") colorEstado = "#d9534f";
-
-                    var fila = `
-                        <tr>
-                            <td><strong>${tarea.fecha}</strong></td>
-                            <td>${tarea.nombre}</td>
-                            <td>${tarea.programa}</td>
-                            <td><span style="background-color: ${colorEstado}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">${tarea.estado}</span></td>
-                            <td style="text-align: center;">
-                                <button onclick="eliminarTarea(${index})" style="background-color: #d9534f; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">✓ Completar</button>
-                            </td>
-                        </tr>
-                    `;
-                    tabla.innerHTML += fila;
-                });
             } else {
                 tabla.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No tienes tareas pendientes. ¡Buen trabajo!</td></tr>';
             }
+
+            // Inyectar datos calculados en el DOM del Dashboard
+            var dashTotal = document.getElementById('dash-total');
+            var dashPromesas = document.getElementById('dash-promesas');
+            var dashDocs = document.getElementById('dash-docs');
+            
+            if(dashTotal) dashTotal.textContent = countTotal;
+            if(dashPromesas) dashPromesas.textContent = countPromesas;
+            if(dashDocs) dashDocs.textContent = countDocs;
         }
 
         function agregarTarea() {
@@ -1848,6 +1892,41 @@
             tareas.splice(index, 1); // Elimina el elemento en el índice específico
             localStorage.setItem('agendaLeadsUF', JSON.stringify(tareas));
             cargarTareas();
+        }
+
+        // --- LÓGICA DE EXPORTACIÓN Y MANEJO DE BLOBS ---
+        function exportarCSV() {
+            var tareasGuardadas = localStorage.getItem('agendaLeadsUF');
+            if (!tareasGuardadas) {
+                alert("No hay datos en la agenda para exportar.");
+                return;
+            }
+            
+            var tareas = JSON.parse(tareasGuardadas);
+            if (tareas.length === 0) {
+                alert("La agenda está vacía.");
+                return;
+            }
+
+            // Crear las cabeceras del CSV
+            var csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Fecha,Nombre del Lead,Programa,Estado\n";
+
+            // Iterar sobre el objeto y formatear como texto delimitado por comas
+            tareas.forEach(function(rowArray) {
+                var fila = `${rowArray.fecha},"${rowArray.nombre}","${rowArray.programa}","${rowArray.estado}"`;
+                csvContent += fila + "\n";
+            });
+
+            // Generar el archivo y forzar la descarga en el navegador
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Reporte_Leads_UF.csv");
+            document.body.appendChild(link); // Requerido para compatibilidad en Firefox
+            
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 </body>
