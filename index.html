@@ -1017,31 +1017,31 @@
 
                 <div class="card">
                     <h2>8.2. Homologaciones y Posgrados (Por Cohorte)</h2>
-                    <p>Pago condicionado a la apertura del grupo <strong>(Mínimo 15 inscritos matriculados)</strong>. Si cierra con 14 o menos, no hay comisión.</p>
+                    <p>El pago de comisiones se activa únicamente cuando <strong>el grupo alcanza un mínimo de 15 inscritos matriculados en total</strong>. Si el grupo completa esta meta, los asesores comisionarán individualmente por las ventas que hayan aportado a ese grupo.</p>
                     <div class="table-responsive">
                         <table>
                             <tr>
                                 <th>Área / Programa</th>
-                                <th>Meta Grupal Alcanzada</th>
-                                <th>Comisión (Financiada)</th>
-                                <th>Comisión (Contado)</th>
+                                <th>Ventas Totales del GRUPO</th>
+                                <th>Comisión Individual (Financiada)</th>
+                                <th>Comisión Individual (Contado)</th>
                             </tr>
                             <tr>
                                 <td rowspan="2"><strong>Pregrado Homologaciones <br>y Posgrado (TSU + MT)</strong></td>
-                                <td>De 15 a 20 inscritos</td>
-                                <td>$15 por venta</td>
-                                <td>$50 por venta fija</td>
+                                <td>Grupo alcanza de 15 a 20 ventas</td>
+                                <td>$15 por cada venta del asesor</td>
+                                <td>$50 por venta fija individual</td>
                             </tr>
                             <tr>
-                                <td>21 inscritos en adelante</td>
-                                <td>$30 por venta</td>
-                                <td>$50 por venta fija</td>
+                                <td>Grupo alcanza 21 o más ventas</td>
+                                <td>$30 por cada venta del asesor</td>
+                                <td>$50 por venta fija individual</td>
                             </tr>
                             <tr>
                                 <td><strong>Maestrías Tecnológicas</strong></td>
                                 <td>Por venta de TSU externo (no aplica Graduado TSU de UF)</td>
-                                <td>$15 por venta</td>
-                                <td>$30 por venta fija</td>
+                                <td>$15 por cada venta del asesor</td>
+                                <td>$30 por venta fija individual</td>
                             </tr>
                         </table>
                     </div>
@@ -1060,12 +1060,12 @@
                             <tr>
                                 <td><strong>Educación Continua</strong></td>
                                 <td>De 20 a 24 inscritos</td>
-                                <td>$10 por venta</td>
+                                <td>$10 por venta individual</td>
                             </tr>
                             <tr>
                                 <td><strong>Educación Continua</strong></td>
                                 <td>25 inscritos en adelante</td>
-                                <td>$15 por venta</td>
+                                <td>$15 por venta individual</td>
                             </tr>
                         </table>
                     </div>
@@ -1089,6 +1089,65 @@
                         <li><strong>Posgrado/Homologaciones:</strong> Aportar mínimo 15 inscritos individuales por cohorte, garantizando 2 ventas de contado.</li>
                         <li><strong>Educación Continua:</strong> Asegurar apertura de grupos con mínimo 20 estudiantes inscritos constantemente.</li>
                     </ul>
+                </div>
+
+                <!-- NUEVO MÓDULO: SIMULADOR DE COMISIONES -->
+                <div class="card" style="background-color: var(--uf-light-teal); border-left: 5px solid var(--uf-teal); margin-top: 30px;">
+                    <h2> Simulador de Comisiones y Proyección Salarial</h2>
+                    <p>Calcula un estimado de tus ingresos mensuales. <em>(Nota: Este es un simulador referencial según las normativas del manual).</em></p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                        <div>
+                            <label class="form-label">Tu Rango Actual (Escala de UFA o UFB):</label>
+                            <select id="sim-rango" class="form-input">
+                                <option value="junior">Asesor Junior (Base $482)</option>
+                                <option value="senior">Asesor Senior (Base $600)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">Tus Ventas Pregrado (Solo Efectivas en los Reportes 465 y 472):</label>
+                            <input type="number" id="sim-pregrado" class="form-input" placeholder="Ej. 22" min="0">
+                        </div>
+                        <div>
+                            <label class="form-label">Tus Ventas Homolog./Posgrado (Financiadas):</label>
+                            <input type="number" id="sim-pos-fin" class="form-input" placeholder="Ej. 8" min="0">
+                        </div>
+                        <div>
+                            <label class="form-label">Tus Ventas Homolog./Posgrado (Contado):</label>
+                            <input type="number" id="sim-pos-con" class="form-input" placeholder="Ej. 2" min="0">
+                        </div>
+                        <div>
+                            <label class="form-label" style="color: #d9534f;">Ventas Totales del GRUPO (Homologaciones/Posgrado):</label>
+                            <input type="number" id="sim-pos-grupo" class="form-input" placeholder="Ej. 15" min="0" title="Suma de tus ventas más las de tus compañeros de grupo">
+                        </div>
+                    </div>
+                    
+                    <button onclick="calcularComisiones()" style="background-color: var(--uf-dark-blue); color: white; border: none; padding: 12px 20px; font-size: 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s;">Calcular Mi Proyección ➔</button>
+
+                    <!-- Resultados del Simulador -->
+                    <div id="sim-resultados" style="display: none; margin-top: 20px; background-color: white; padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                        <h3 style="margin-top: 0; color: var(--uf-teal); text-align: center;">Resumen de Ingresos</h3>
+                        <hr style="border-color: var(--border-color); margin-bottom: 15px;">
+                        
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Sueldo Base:</span>
+                            <strong id="res-base">$0.00</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Comisiones Pregrado:</span>
+                            <strong id="res-com-pre" style="color: #00a650;">$0.00</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Comisiones Posgrado/Homologaciones:</span>
+                            <strong id="res-com-pos" style="color: #00a650;">$0.00</strong>
+                        </div>
+                        <hr style="border-color: var(--border-color); margin: 15px 0;">
+                        <div style="display: flex; justify-content: space-between; font-size: 1.3rem; color: var(--uf-dark-blue);">
+                            <strong>TOTAL ESTIMADO:</strong>
+                            <strong id="res-total">$0.00</strong>
+                        </div>
+                        <p id="res-mensaje" style="text-align: center; margin-top: 15px; font-size: 0.85rem; font-weight: bold;"></p>
+                    </div>
                 </div>
             </section>
 
@@ -1350,7 +1409,7 @@
 
                 <!-- MÓDULO DASHBOARD Y EXPORTACIÓN -->
                 <div class="card" style="background-color: var(--uf-dark-blue); color: white; border: none; padding: 25px;">
-                    <h2 style="color: white; margin-top: 0;">Dashboard de Rendimiento Comercial</h2>
+                    <h2 style="color: white; margin-top: 0;">📊 Dashboard de Rendimiento Comercial</h2>
                     <p style="color: #a4c5d9; font-size: 0.9rem;">Métricas calculadas en tiempo real a partir de tu base de datos local.</p>
                     
                     <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
@@ -1927,6 +1986,67 @@
             
             link.click();
             document.body.removeChild(link);
+        }
+
+        // --- LÓGICA: SIMULADOR DE COMISIONES (BUSINESS RULES ENGINE) ---
+        function calcularComisiones() {
+            // 1. Obtener valores
+            var rango = document.getElementById('sim-rango').value;
+            var ventasPregrado = parseInt(document.getElementById('sim-pregrado').value) || 0;
+            var ventasPosFin = parseInt(document.getElementById('sim-pos-fin').value) || 0;
+            var ventasPosCon = parseInt(document.getElementById('sim-pos-con').value) || 0;
+            var ventasGrupo = parseInt(document.getElementById('sim-pos-grupo').value) || 0;
+
+            // 2. Variables de cálculo
+            var sueldoBase = (rango === 'senior') ? 600 : 482; // Sueldo base corregido
+            var comisionPregrado = 0;
+            var comisionPosgrado = 0;
+            var misVentasTotalesPosgrado = ventasPosFin + ventasPosCon;
+            var mensajeAlerta = "";
+
+            // Validación de UX: Las ventas del grupo no pueden ser menores a mis propias ventas
+            if (ventasGrupo < misVentasTotalesPosgrado && misVentasTotalesPosgrado > 0) {
+                ventasGrupo = misVentasTotalesPosgrado; // Autocorrección
+            }
+
+            // 3. Reglas de Negocio: Pregrado (Retroactivo si es >= 20)
+            if (ventasPregrado >= 20) {
+                var valorPorVentaPre = (rango === 'senior') ? 20 : 15;
+                comisionPregrado = ventasPregrado * valorPorVentaPre;
+            } else if (ventasPregrado > 0) {
+                mensajeAlerta += "⚠️ En Pregrado necesitas mínimo 20 ventas para activar comisiones. ¡Te faltan " + (20 - ventasPregrado) + "!\n";
+            }
+
+            // 4. Reglas de Negocio: Posgrado / Homologaciones (Mínimo 15 en el GRUPO)
+            if (ventasGrupo >= 15) {
+                var valorFinanciado = (ventasGrupo >= 21) ? 30 : 15;
+                var valorContado = 50; // Fijo según manual
+                
+                // Comisiono solo por MIS ventas, pero al valor que desbloqueó el GRUPO
+                comisionPosgrado = (ventasPosFin * valorFinanciado) + (ventasPosCon * valorContado);
+            } else if (ventasGrupo > 0 || misVentasTotalesPosgrado > 0) {
+                mensajeAlerta += "⚠️ En Posgrado/Homolog. el GRUPO necesita llegar a 15 ventas para activar tus comisiones. (Actualmente: " + ventasGrupo + "). ";
+            }
+
+            // 5. Calcular Total y Mostrar en Pantalla
+            var totalGeneral = sueldoBase + comisionPregrado + comisionPosgrado;
+
+            document.getElementById('res-base').textContent = "$" + sueldoBase.toFixed(2);
+            document.getElementById('res-com-pre').textContent = "$" + comisionPregrado.toFixed(2);
+            document.getElementById('res-com-pos').textContent = "$" + comisionPosgrado.toFixed(2);
+            document.getElementById('res-total').textContent = "$" + totalGeneral.toFixed(2);
+            
+            var msjLabel = document.getElementById('res-mensaje');
+            if(mensajeAlerta === "") {
+                msjLabel.textContent = "¡Excelente proyección! Estás cumpliendo tus metas.";
+                msjLabel.style.color = "#00a650";
+            } else {
+                msjLabel.innerText = mensajeAlerta;
+                msjLabel.style.color = "#d9534f";
+            }
+
+            // Mostrar el cuadro de resultados con animación
+            document.getElementById('sim-resultados').style.display = 'block';
         }
     </script>
 </body>
