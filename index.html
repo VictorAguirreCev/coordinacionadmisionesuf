@@ -505,7 +505,7 @@
                 <span class="logo-u">U</span><span class="logo-f">F</span>
             </div>
             <h2>Universitario de Formación</h2>
-            <p>MANUAL DE ADMISIONES - BETA 5.1</p>
+            <p>MANUAL DE ADMISIONES - BETA 6.1</p>
             <input type="text" id="searchInput" class="search-box" placeholder="Buscar procesos, etiquetas..." onkeyup="searchManual()">
         </div>
         <div class="nav-menu" id="navMenu">
@@ -520,7 +520,6 @@
             <button class="nav-btn" id="btn-comisiones" data-keywords="pagos metas bonos incentivos junior senior" onclick="openTab(event, 'comisiones')"><span>8</span> Comisiones e Incentivos</button>
             <button class="nav-btn" id="btn-anexos" data-keywords="etiquetas tags nomenclaturas cnel" onclick="openTab(event, 'anexos')"><span>9</span> Nomenclaturas (SGA)</button>
             <button class="nav-btn" id="btn-herramientas" data-keywords="calculadora correo generador buscador oferta academica automatizacion whatsapp portapapeles bloc" onclick="openTab(event, 'herramientas')"><span>🛠️</span> Herramientas Asesor</button>
-            
             <button class="nav-btn" id="btn-agenda" data-keywords="tareas leads seguimiento recordatorio agenda" onclick="openTab(event, 'agenda')"><span>📅</span> Agenda Leads</button>
 
             <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 20px;">
@@ -1018,7 +1017,7 @@
 
                 <!-- MÓDULO: SIMULADOR DE COMISIONES -->
                 <div class="card" style="background-color: var(--uf-light-teal); border-left: 5px solid var(--uf-teal); margin-top: 30px;">
-                    <h2>💰 Simulador de Comisiones y Proyección Salarial</h2>
+                    <h2>Simulador de Comisiones y Proyección Salarial</h2>
                     <p>Calcula un estimado de tus ingresos mensuales. <em>(Nota: Este es un simulador referencial según las normativas del manual).</em></p>
                     
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
@@ -1260,7 +1259,7 @@
                             <input type="text" id="perfil-telefono" class="form-input" placeholder="Ej. 0912345678">
                         </div>
                     </div>
-                    <button onclick="guardarPerfil()" style="background-color: var(--uf-dark-blue); color: white; border: none; padding: 10px 20px; font-size: 0.9rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 15px; width: 100%; transition: 0.3s;">💾 Guardar Mis Datos</button>
+                    <button onclick="guardarPerfil()" style="background-color: var(--uf-dark-blue); color: white; border: none; padding: 10px 20px; font-size: 0.9rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 15px; width: 100%; transition: 0.3s;">Guardar Mis Datos</button>
                     <p id="msg-guardado" style="color: green; font-weight: bold; display: none; text-align: center; margin-top: 10px;">¡Datos guardados en la memoria del navegador!</p>
                 </div>
 
@@ -1270,9 +1269,9 @@
                     <p>Haz clic en cualquier botón para copiar la información instantáneamente a tu portapapeles.</p>
                     
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px;">
-                        <button onclick="copiarTexto('saludo')" style="background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s;">💬 Copiar: Saludo Inicial</button>
-                        <button onclick="copiarTexto('seguimiento')" style="background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s;">🔄 Copiar: Seguimiento (Día 2)</button>
-                        <button onclick="copiarTexto('documentos')" style="background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s;">📄 Copiar: Solicitud de Documentos</button>
+                        <button onclick="copiarTexto('saludo')" style="background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s;">Copiar: Saludo Inicial</button>
+                        <button onclick="copiarTexto('seguimiento')" style="background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s;">Copiar: Seguimiento (Día 2)</button>
+                        <button onclick="copiarTexto('documentos')" style="background-color: #25D366; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; text-align: left; transition: 0.3s;">Copiar: Solicitud de Documentos</button>
                     </div>
                     <p id="msg-copiado" style="color: #25D366; font-weight: bold; display: none; margin-top: 10px; text-align: center;">¡Elemento copiado al portapapeles!</p>
                 </div>
@@ -1337,11 +1336,10 @@
                     <p style="color: #a4c5d9; font-size: 0.9rem;">Métricas calculadas en tiempo real a partir de tu base de datos local.</p>
                     
                     <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px; align-items: center;">
-                        
                         <!-- Columna de Números -->
                         <div style="flex: 1; min-width: 250px;">
                             <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 10px;">
-                                <span style="font-size: 0.85rem; display: block; color: #b5d1e6; text-transform: uppercase; font-weight: bold;">Leads Pendientes</span>
+                                <span style="font-size: 0.85rem; display: block; color: #b5d1e6; text-transform: uppercase; font-weight: bold;">Leads Pendientes Totales</span>
                                 <strong style="font-size: 2.2rem; font-family: 'Montserrat', sans-serif;" id="dash-total">0</strong>
                             </div>
                             <div style="display: flex; gap: 10px;">
@@ -1360,11 +1358,10 @@
                         <div style="flex: 1; min-width: 250px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; height: 200px; display: flex; justify-content: center; align-items: center;">
                             <canvas id="leadsChart"></canvas>
                         </div>
-
                     </div>
                     
                     <div style="margin-top: 25px; text-align: right;">
-                        <button onclick="exportarCSV()" style="background-color: var(--uf-teal); color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">📥 Exportar Base a Excel (CSV)</button>
+                        <button onclick="exportarCSV()" style="background-color: var(--uf-teal); color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">Exportar Base a Excel (CSV)</button>
                     </div>
                 </div>
                 
@@ -1394,19 +1391,32 @@
                             </select>
                         </div>
                     </div>
-                    <button onclick="agregarTarea()" style="background-color: #f39c12; color: white; border: none; padding: 12px 20px; font-size: 0.95rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 20px; transition: 0.3s;">➕ Guardar Recordatorio</button>
+                    <button onclick="agregarTarea()" style="background-color: #f39c12; color: white; border: none; padding: 12px 20px; font-size: 0.95rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 20px; transition: 0.3s;">Guardar Recordatorio</button>
                 </div>
 
                 <div class="card">
                     <h2>2. Mis Tareas Pendientes</h2>
+                    
+                    <!-- NUEVO: Barra de Búsqueda y Filtro de Estados -->
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+                        <input type="text" id="filtro-texto-agenda" class="form-input" placeholder="Buscar lead por nombre..." onkeyup="cargarTareas()" style="flex: 2; margin-top: 0; min-width: 200px;">
+                        <select id="filtro-estado-agenda" class="form-input" onchange="cargarTareas()" style="flex: 1; margin-top: 0; min-width: 150px;">
+                            <option value="Todos">Todos los estados</option>
+                            <option value="Llamada Inicial">Llamada Inicial</option>
+                            <option value="Envío de Documentos">Envío de Documentos</option>
+                            <option value="Promesa de Pago">Promesa de Pago</option>
+                            <option value="Retención">Retención</option>
+                        </select>
+                    </div>
+
                     <div class="table-responsive">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Fecha</th>
-                                    <th>Lead</th>
+                                    <th>Fecha Aviso</th>
+                                    <th>Nombre del Lead</th>
                                     <th>Programa</th>
-                                    <th>Estado</th>
+                                    <th>Estado de Venta</th>
                                     <th style="text-align: center;">Acción</th>
                                 </tr>
                             </thead>
@@ -1582,7 +1592,6 @@
             }
         }
 
-        // --- VALIDACIONES ESTRICTAS Y GENERADOR DE CORREOS ---
         function resetErrores() {
             var inputs = document.querySelectorAll('.form-input');
             inputs.forEach(input => input.classList.remove('input-error'));
@@ -1749,12 +1758,10 @@
             const ctx = document.getElementById('leadsChart');
             if (!ctx) return;
             
-            // Destruir gráfico anterior si existe para evitar superposición
             if (leadsChartInstance) {
                 leadsChartInstance.destroy();
             }
 
-            // Si no hay datos en absoluto, podemos poner un gráfico vacío gris
             var dataValues = [llamadas, documentos, promesas, retenciones];
             var bgColors = ['#128C7E', '#f39c12', '#00a650', '#d9534f'];
             
@@ -1788,12 +1795,16 @@
             });
         }
 
-        // --- LÓGICA CRUD: DASHBOARD Y RENDERIZADO ---
+        // --- LÓGICA CRUD AVANZADA: DASHBOARD, FILTROS Y ALERTAS DE FECHAS ---
         function cargarTareas() {
             var tareasGuardadas = localStorage.getItem('agendaLeadsUF');
             var tabla = document.getElementById('tabla-tareas');
             if (!tabla) return;
             tabla.innerHTML = ''; 
+
+            // Leer valores de los filtros
+            var textoBusqueda = document.getElementById('filtro-texto-agenda') ? document.getElementById('filtro-texto-agenda').value.toLowerCase() : '';
+            var estadoBusqueda = document.getElementById('filtro-estado-agenda') ? document.getElementById('filtro-estado-agenda').value : 'Todos';
 
             var countTotal = 0;
             var countPromesas = 0;
@@ -1803,19 +1814,48 @@
 
             if (tareasGuardadas) {
                 var tareas = JSON.parse(tareasGuardadas);
-                countTotal = tareas.length;
                 
-                if(tareas.length === 0) {
-                    tabla.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No tienes tareas pendientes. ¡Buen trabajo!</td></tr>';
+                // Mapear el índice original a cada tarea antes de filtrar (para no borrar datos incorrectos)
+                tareas.forEach((t, i) => t.originalIndex = i);
+                
+                // Aplicar filtros
+                var tareasFiltradas = tareas.filter(function(t) {
+                    var matchTexto = t.nombre.toLowerCase().includes(textoBusqueda) || t.programa.toLowerCase().includes(textoBusqueda);
+                    var matchEstado = (estadoBusqueda === 'Todos') || (t.estado === estadoBusqueda);
+                    return matchTexto && matchEstado;
+                });
+
+                countTotal = tareas.length; // Dashboard cuenta el total global
+                
+                if(tareasFiltradas.length === 0) {
+                    tabla.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">No se encontraron leads con estos filtros.</td></tr>';
                 } else {
-                    tareas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+                    // Ordenar cronológicamente
+                    tareasFiltradas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
 
-                    tareas.forEach(function(tarea, index) {
-                        if(tarea.estado === "Promesa de Pago") countPromesas++;
-                        else if(tarea.estado === "Envío de Documentos") countDocs++;
-                        else if(tarea.estado === "Llamada Inicial") countLlamadas++;
-                        else if(tarea.estado === "Retención") countRetencion++;
+                    // Lógica del Día de Hoy (Para sistema de Alertas)
+                    var hoy = new Date();
+                    hoy.setHours(0, 0, 0, 0);
 
+                    tareasFiltradas.forEach(function(tarea) {
+                        // Conteo global de KPIs (sobre el array original, no el filtrado, para que el gráfico no desaparezca al filtrar)
+                        // Note: To keep the chart global, we iterate over `tareas` below for stats.
+                        
+                        // Parseo de Fechas para alertas de vencimiento
+                        var partesFecha = tarea.fecha.split('-');
+                        var fechaTarea = new Date(partesFecha[0], partesFecha[1] - 1, partesFecha[2]);
+                        fechaTarea.setHours(0, 0, 0, 0);
+
+                        var badgeFecha = "";
+                        if (fechaTarea < hoy) {
+                            badgeFecha = `<span style="color: #d9534f; font-weight: 800;">⚠️ Vencido<br><small>(${tarea.fecha})</small></span>`;
+                        } else if (fechaTarea.getTime() === hoy.getTime()) {
+                            badgeFecha = `<span style="color: #f39c12; font-weight: 800;">⏳ HOY<br><small>(${tarea.fecha})</small></span>`;
+                        } else {
+                            badgeFecha = `<span style="color: #00a650; font-weight: 600;">📅 Próximo<br><small>(${tarea.fecha})</small></span>`;
+                        }
+
+                        // Colores de estado
                         var colorEstado = "#128C7E"; 
                         if(tarea.estado === "Promesa de Pago") colorEstado = "#00a650";
                         else if(tarea.estado === "Envío de Documentos") colorEstado = "#f39c12";
@@ -1823,22 +1863,32 @@
 
                         var fila = `
                             <tr>
-                                <td><strong>${tarea.fecha}</strong></td>
-                                <td>${tarea.nombre}</td>
-                                <td>${tarea.programa}</td>
+                                <td>${badgeFecha}</td>
+                                <td><strong>${tarea.nombre}</strong></td>
+                                <td style="font-size: 0.85rem;">${tarea.programa}</td>
                                 <td><span style="background-color: ${colorEstado}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">${tarea.estado}</span></td>
                                 <td style="text-align: center;">
-                                    <button onclick="eliminarTarea(${index})" style="background-color: #d9534f; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">✓ Completar</button>
+                                    <button onclick="eliminarTarea(${tarea.originalIndex})" style="background-color: #d9534f; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">✓ Cerrar Tarea</button>
                                 </td>
                             </tr>
                         `;
                         tabla.innerHTML += fila;
                     });
                 }
+                
+                // Conteo para los gráficos y números gigantes (se hace sobre TODAS las tareas, no solo las filtradas)
+                tareas.forEach(function(tarea) {
+                    if(tarea.estado === "Promesa de Pago") countPromesas++;
+                    else if(tarea.estado === "Envío de Documentos") countDocs++;
+                    else if(tarea.estado === "Llamada Inicial") countLlamadas++;
+                    else if(tarea.estado === "Retención") countRetencion++;
+                });
+
             } else {
-                tabla.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No tienes tareas pendientes. ¡Buen trabajo!</td></tr>';
+                tabla.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">Tu agenda está vacía. ¡Buen trabajo!</td></tr>';
             }
 
+            // Actualizar Números del DOM
             var dashTotal = document.getElementById('dash-total');
             var dashPromesas = document.getElementById('dash-promesas');
             var dashDocs = document.getElementById('dash-docs');
@@ -1847,7 +1897,7 @@
             if(dashPromesas) dashPromesas.textContent = countPromesas;
             if(dashDocs) dashDocs.textContent = countDocs;
 
-            // Llamamos a la función de renderizado del gráfico de Chart.js
+            // Renderizar la dona gráfica
             renderizarGrafico(countLlamadas, countDocs, countPromesas, countRetencion);
         }
 
@@ -1879,12 +1929,16 @@
             programa.value = '';
             fecha.value = '';
 
+            // Limpiar filtros al agregar una tarea para que se vea reflejada
+            document.getElementById('filtro-texto-agenda').value = '';
+            document.getElementById('filtro-estado-agenda').value = 'Todos';
+
             cargarTareas();
         }
 
-        function eliminarTarea(index) {
+        function eliminarTarea(originalIndex) {
             var tareas = JSON.parse(localStorage.getItem('agendaLeadsUF'));
-            tareas.splice(index, 1); 
+            tareas.splice(originalIndex, 1); 
             localStorage.setItem('agendaLeadsUF', JSON.stringify(tareas));
             cargarTareas();
         }
@@ -1920,7 +1974,7 @@
             document.body.removeChild(link);
         }
 
-        // --- LÓGICA: SIMULADOR DE COMISIONES (BUSINESS RULES ENGINE) ---
+        // --- LÓGICA: SIMULADOR DE COMISIONES ---
         function calcularComisiones() {
             var rango = document.getElementById('sim-rango').value;
             var ventasPregrado = parseInt(document.getElementById('sim-pregrado').value) || 0;
@@ -1963,7 +2017,7 @@
             
             var msjLabel = document.getElementById('res-mensaje');
             if(mensajeAlerta === "") {
-                msjLabel.textContent = "🚀 ¡Excelente proyección! Estás cumpliendo tus metas.";
+                msjLabel.textContent = "¡Excelente proyección! Estás cumpliendo tus metas.";
                 msjLabel.style.color = "#00a650";
             } else {
                 msjLabel.innerText = mensajeAlerta;
